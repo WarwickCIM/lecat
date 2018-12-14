@@ -1,0 +1,22 @@
+Package: lecat
+Type: Package
+Title: Lexicon-based Categorization and Analysis Tool
+Version: 0.1.0
+Author: James Tripp
+Maintainer: James Tripp <james.tripp@warwick.ac.uk>
+Description: LE-CAT is a Lexicon-based Categorization and Analysis Tool developed 
+    by the Centre for Interdisciplinary Methodologies in collaboration with the Media
+    of Cooperation Group at the University of Siegen. More information can be found at
+    https://www.warwick.ac.uk/cim/tools/ .
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports:
+    igraph,
+    assertive,
+    httr,
+    urltools,
+    curl,
+    stringr,
+    plyr
