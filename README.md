@@ -221,7 +221,8 @@ network graphs using the excellent [Gephi](https://gephi.org) program.
 node1-node2 and node2-node1 then select merge first withing Gephi).
 
 This function also returns a cooccurance table and the igraph object.
-One can plot the graph in igraph using the plot function.
+One can plot the graph using the igraph package by passing igraph object
+to the plot function.
 
 ``` r
 plot(cooccurrence$graph)

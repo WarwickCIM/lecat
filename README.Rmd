@@ -172,7 +172,7 @@ __Note__ Creating the cooccurence graph can take a lot of time depending on the 
 
 If a filename is specified then the a graphml file is created. The Type, Category and Column_examined are attributes of the nodes and the weight of the edges are the cooccurance of the queries. You may view graphml network graphs using the excellent [Gephi](https://gephi.org) program. __Note__ if you have duplicate edges (where there are edges between node1-node2 and node2-node1 then select merge first withing Gephi).
 
-This function also returns a cooccurance table and the igraph object. One can plot the graph in igraph using the plot function.
+This function also returns a cooccurance table and the igraph object. One can plot the graph using the igraph package by passing igraph object to the plot function.
 
 ``` r
 plot(cooccurrence$graph)
