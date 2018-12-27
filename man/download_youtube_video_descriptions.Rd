@@ -13,6 +13,9 @@ download_youtube_video_descriptions(video_ids, api_key, part = "snippet")
 
 \item{part}{The data you want returned. See the YouTube documentation for details. Defaults to 'snippet, statistics'.}
 }
+\value{
+Data frame containing YouTube ID, title, published and description
+}
 \description{
 Downloads the description of multiple videos using the YouTube V3 API.
 Use the \link[lecat]{download_youtube_video_description} function for a single YouTube video.

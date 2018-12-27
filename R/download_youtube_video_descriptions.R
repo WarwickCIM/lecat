@@ -7,6 +7,7 @@
 #' @param video_ids Character array containing multiple YouTube IDs
 #' @param api_key An API key able to access the YouTube API v3
 #' @param part The data you want returned. See the YouTube documentation for details. Defaults to 'snippet, statistics'.
+#' @return Data frame containing YouTube ID, title, published and description
 #'
 download_youtube_video_descriptions <- function(video_ids, api_key, part = 'snippet'){
   assertive::assert_is_character(video_ids)
