@@ -1,11 +1,15 @@
 #' create_cotable
 #'
 #' Generates a cooccurence table
-#' @description Calculates a table of cooccurences
+#' @description Calculates a table of cooccurences of a single node to all other nodes. Called by \link[lecat]{create_cooccurrence_graph} function for each node in turn.
 #'
-#' @param this_mat matrix of occurences of one item. Rows are items (Category, Type or Query) and columns are corpus elements
-#' @param that_mat matrix of occurences of the other items. Rows and columns as this_mat.
-#' @param this_mat_attributes data frame containing the Type
+#' @param this_mat matrix of occurences of one item. Rows are nodes - differs to either Type, Category or Query depending on the level passed to \link[lecat]{create_cooccurrence_graph} - and columns are corpus elements
+#' @param that_mat matrix of occurences of the other items. Rows and columns as this_mat
+#' @param this_mat_attr data frame containing a single nodes attributes. Attributes present - Type or Category -
+#' depends on the level parameter passed to \link[lecat]{create_cooccurrence_graph}
+#' @param that_mat_attr data frame containing attribute of all other nodes. Attributes differ as above depending on level
+#' @param level level of cooccurrence analysis. Can be either 'Type', 'Category' or 'Query'.
+#'
 #' @return data frame containing node1, node2 and the cooccurrence frequency
 #'
 create_cotable <- function(this_mat, that_mat, this_mat_attr, that_mat_attr, level) {
@@ -21,14 +25,27 @@ create_cotable <- function(this_mat, that_mat, this_mat_attr, that_mat_attr, lev
     cooccurence = rowSums(cooc_matrix),
     stringsAsFactors = FALSE
   )
-  att_table <- switch(level,
-                      Query = data.frame(
-                        node1.Type = rep(this_mat_attr$Type, nrow(cooc_table)),
-                        node1.Category = rep(this_mat_attr$Category, nrow(cooc_table)),
-                        node2.Feature = that_mat_attr$Type,
-                        node2.Category = that_mat_attr$Category,
-                        stringsAsFactors = FALSE
-                      ))
+  if (level == 'Query') {
+    att_table <- data.frame(
+      node1.Type = rep(this_mat_attr$Type, nrow(cooc_table)),
+      node1.Category = rep(this_mat_attr$Category, nrow(cooc_table)),
+      node2.Type = that_mat_attr$Type,
+      node2.Category = that_mat_attr$Category,
+      stringsAsFactors = FALSE
+    )
+  } else if (level == 'Category') {
+    att_table <- data.frame(
+      node1.Type = rep(this_mat_attr$Type, nrow(cooc_table)),
+      node2.Type = that_mat_attr$Type,
+      stringsAsFactors = FALSE
+    )
+  } else if (level == 'Type') {
+    att_table <- data.frame(node1.Type = rep(NA, nrow(cooc_table)),
+                            node2.Type = rep(NA, nrow(cooc_table)),
+                            stringsAsFactors = FALSE)
+  } else {
+    stop('level parameter does not equal Query, Type or Category')
+  }
   cooc_table <- cbind(att_table, cooc_table)
   row.names(cooc_table) <- 1:nrow(cooc_table)
   cooc_table

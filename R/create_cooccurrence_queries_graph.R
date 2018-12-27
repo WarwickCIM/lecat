@@ -52,13 +52,9 @@ create_cooccurrence_query_graph <- function(lecat_result, filename = NULL){
     Category = lecat_result$Category,
     Column_examined = lecat_result$Column_examined
     )
-  for (i in 1:nrow(cotable)) {
-    if (cotable$cooccurrence[i] > 0){
-      graph <- igraph::add_edges(graph = graph,
-                                 edges = c(cotable$node_nv_x[i], cotable$node_nv_y[i]),
-                                 weight = cotable$cooccurrence[i])
-    }
-  }
+
+  message('Removing duplicate edges')
+  graph <- igraph::simplify(graph)
   if (!is.null(filename)){
     assertive::assert_is_character(filename)
     igraph::write_graph(graph = graph, file = filename, format = 'graphml')
