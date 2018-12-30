@@ -1,6 +1,6 @@
 navbarPage(
   title = 'LE-CAT',
-  theme = shinytheme('cosmo'),
+  theme = shinythemes::shinytheme('cosmo'),
   tabPanel(
     'About',
     sidebarLayout(
@@ -40,39 +40,43 @@ navbarPage(
     'YouTube Data Collection',
     sidebarLayout(
       sidebarPanel(
+        textInput(inputId = 'youtube_key', label = 'YouTube API key:', value = 'AIzaSyBGikBaMzNwzr7xIP-0PHqojYSyJvRboOU'),
         conditionalPanel(
           condition = "output.youtube_flag == 'initial_state'",
-          textInput(inputId = 'youtube_key', label = 'YouTube API key:', value = 'AIzaSyBGikBaMzNwzr7xIP-0PHqojYSyJvRboOU'),
           fileInput("youtube_url_file", "Choose CSV File",
                     multiple = FALSE,
                     accept = c("text/csv",
                                "text/comma-separated-values,text/plain",
-                               ".csv")),
-          tags$hr(),
+                               ".csv"))
+        ),
+        conditionalPanel(
+          condition = "output.youtube_flag == 'youtube_urls_uploaded'",
           actionButton(
             inputId = 'youtube_description_download_button',
             label = 'Download YouTube descriptions')
+        ),
+        conditionalPanel(
+          condition = "output.youtube_flag == 'descriptions_downloaded'",
+          downloadButton("youtube_data_file_download_button", "Download YouTube Descriptions")
         )
       ),
-      mainPanel(
-        conditionalPanel(
-          condition = "output.youtube_flag == 'initial_state'",
-          h5('Instructions'),
-          p('Here you can download YouTube descriptions for use with LE-CAT.
-            Please make sure you have the following at hand:'),
-          tags$ul(
-            tags$li('A CSV file containing one or more YouTube URLs.
-            The URL should be similiar to https://www.youtube.com/watch?v=fjskfjdue'),
-            tags$li('If you are using the app via R or Rstudio then a YouTube API key.
-               Students using LE-CAT via the Warwick servers do not need a YouTube API key.')
-          ),
-          hr(),
-          h5('YouTube URLs:'),
-          DT::dataTableOutput('youtube_urls'),
-          hr(),
-          h5('YouTube Descriptions:'),
-          DT::dataTableOutput('youtube_descriptions')
-        )
+    mainPanel(
+        condition = "output.youtube_flag == 'initial_state'",
+        h5('Instructions'),
+        p('Here you can download YouTube descriptions for use with LE-CAT.
+          Please make sure you have the following at hand:'),
+        tags$ul(
+          tags$li('A CSV file containing one or more YouTube URLs.
+          The URL should be similiar to https://www.youtube.com/watch?v=fjskfjdue'),
+          tags$li('If you are using the app via R or Rstudio then a YouTube API key.
+             Students using LE-CAT via the Warwick servers do not need a YouTube API key.')
+        ),
+        hr(),
+        h5('YouTube URLs:'),
+        DT::dataTableOutput('youtube_urls'),
+        hr(),
+        h5('YouTube Descriptions:'),
+        DT::dataTableOutput('youtube_descriptions')
       )
     )
   ),

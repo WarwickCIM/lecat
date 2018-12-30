@@ -4,13 +4,15 @@
 \alias{extract_video_ids}
 \title{extract_video_ids}
 \usage{
-extract_video_ids(urls, resolve = TRUE)
+extract_video_ids(urls, resolve = TRUE, inShiny = FALSE)
 }
 \arguments{
 \item{urls}{A character array of YouTube urls}
 
 \item{resolve}{If resolve is TRUE then the function will attempt to resolve URLS which do not
 appear to be of the format www.youtube.com/watch?v=xxxxxx}
+
+\item{inShiny}{If inShiny is TRUE then notifications will be shown on the shiny app}
 }
 \value{
 A character array of YouTube video IDs are returned.

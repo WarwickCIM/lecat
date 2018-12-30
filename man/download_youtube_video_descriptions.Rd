@@ -4,14 +4,17 @@
 \alias{download_youtube_video_descriptions}
 \title{download_youtube_video_descriptions}
 \usage{
-download_youtube_video_descriptions(video_ids, api_key, part = "snippet")
+download_youtube_video_descriptions(video_ids, api_key, part = "snippet",
+  inShiny = FALSE)
 }
 \arguments{
 \item{video_ids}{Character array containing multiple YouTube IDs}
 
 \item{api_key}{An API key able to access the YouTube API v3}
 
-\item{part}{The data you want returned. See the YouTube documentation for details. Defaults to 'snippet, statistics'.}
+\item{part}{The data you want returned. See the YouTube documentation for details. Defaults to 'snippet, statistics'}
+
+\item{inShiny}{If inShiny is TRUE then shiny based notifications will be shown}
 }
 \value{
 Data frame containing YouTube ID, title, published and description
