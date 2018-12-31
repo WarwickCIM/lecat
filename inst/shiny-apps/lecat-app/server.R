@@ -16,6 +16,18 @@ function(input, output, session) {
     lecat_lexicon = data.frame(
       Type = 'No lexicon loaded yet',
       stringsAsFactors = FALSE
+    ),
+    lecat_corpus = data.frame(
+      Type = 'No corpus loaded yet',
+      stringsAsFactors = FALSE
+    ),
+    lecat_lookup_table = data.frame(
+      Type = 'No lookup table loaded yet',
+      stringsAsFactors = FALSE
+    ),
+    lecat_raw_result = data.frame(
+      Type = 'LECAT not run yet',
+      stringsAsFactors = FALSE
     )
   )
 
@@ -23,6 +35,9 @@ function(input, output, session) {
   output$youtube_urls <- DT::renderDataTable(DT::datatable(data$youtube_urls, options = list(pageLength = 5)))
   output$youtube_descriptions <- DT::renderDataTable(data$youtube_descriptions)
   output$lecat_lexicon <- DT::renderDataTable(data$lecat_lexicon)
+  output$lecat_corpus <- DT::renderDataTable(data$lecat_corpus)
+  output$lecat_lookup_table <- DT::renderDataTable(data$lecat_lookup_table)
+  output$lecat_raw_result <- DT::renderDataTable(data$lecat_raw_result)
 
   # State flags for controlling UI -------------------------------------
 
@@ -102,6 +117,100 @@ function(input, output, session) {
 
   ## LE-CAT Analysis
 
-  # Example files
+  # Example file download buttons
+  output$lecat_example_lexicon_button <- downloadHandler(
+    filename = paste0("lecat_lexicon_example", Sys.Date(),".csv"),
+    content = function(file) {
+      write.table(x = data.frame(
+        Type = c('technology', 'influencers'),
+        Category = c('Apple', 'CIM'),
+        Query = c('iphone', 'Noortje Marres'),
+        Query1 = c('iPad', 'James Tripp'),
+        Query3 = c('imac', ''),
+        stringsAsFactors = FALSE
+      ), sep = ',', file = file, row.names = FALSE)
+    }
+  )
 
+  output$lecat_example_corpus_button <- downloadHandler(
+    filename = paste0("lecat_example_corpus_", Sys.Date(),".csv"),
+    content = function(file) {
+      write.table(x = data.frame(
+        ID = c(1,2,3),
+        title = c('James Tripp talks about LE-CAT',
+                  'Noortje Marres interview',
+                  'New iphone'),
+        description = c('In this iphone and ipad delivered lecture James talks about a new tool.',
+                        'An interesting interview',
+                        'Apple has launched a series of iphones, ipads and imacs.'),
+        stringsAsFactors = FALSE
+      ), sep = ',', file = file, row.names = FALSE)
+    }
+  )
+
+  output$lecat_example_lookup_table_button <- downloadHandler(
+    filename = paste0("lecat_example_lookup_table", Sys.Date(),".csv"),
+    content = function(file) {
+      write.table(x = data.frame(
+        Type = c('technology', 'influencers'),
+        column = c('description', 'title'),
+        stringsAsFactors = FALSE
+      ), sep = ',', file = file, row.names = FALSE)
+    }
+  )
+
+  # Load lexicon, lookup table and corpus
+  observeEvent(input$lecat_lexicon_file, {
+    req(input$lecat_lexicon_file)
+    shiny::showNotification('Formatting lexicon to long format', type = 'message', duration = 2)
+    tryCatch(
+      {
+        x  <- read.csv(input$lecat_lexicon_file$datapath, stringsAsFactors = FALSE)
+        data$lecat_lexicon <- parse_lexicon(x)
+      },
+      error = function(e) {
+        # return a safeError if a parsing error occurs
+        stop(safeError(e))
+      }
+    )
+  })
+
+  observeEvent(input$lecat_corpus_file, {
+    req(input$lecat_corpus_file)
+    tryCatch(
+      {
+        data$lecat_corpus <- read.csv(input$lecat_corpus_file$datapath, stringsAsFactors = FALSE)
+      },
+      error = function(e) {
+        # return a safeError if a parsing error occurs
+        stop(safeError(e))
+      }
+    )
+  })
+
+  observeEvent(input$lecat_lookup_table_file, {
+    req(input$lecat_lookup_table_file)
+    tryCatch(
+      {
+        data$lecat_lookup_table <- read.csv(input$lecat_lookup_table_file$datapath, stringsAsFactors = FALSE)
+      },
+      error = function(e) {
+        # return a safeError if a parsing error occurs
+        stop(safeError(e))
+      }
+    )
+  })
+
+  # When user selects to run a LE-CAT analysis
+  observeEvent(input$lecat_run_analysis_button, {
+    shiny::showNotification('Running lecat analysis')
+    x <- run_lecat_analysis(
+      lexicon = data$lecat_lexicon,
+      corpus = data$lecat_corpus,
+      searches = data$lecat_lookup_table,
+      id = 'ID',
+      regex_expression = '\\Wquery\\W'
+      )
+    print(x)
+  })
 }

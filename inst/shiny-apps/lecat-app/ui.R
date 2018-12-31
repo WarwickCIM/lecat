@@ -88,16 +88,46 @@ navbarPage(
         downloadButton(
           'lecat_example_lexicon_button',
           'Lexicon'),
-        br(),
-        br(),
         downloadButton(
           'lecat_example_corpus_button',
           'Corpus'),
-        br(),
-        br(),
         downloadButton(
           'lecat_example_lookup_table_button',
-          'Lookup Table')
+          'Lookup Table'),
+        hr(),
+        fileInput("lecat_lexicon_file", "Choose Lexicon File",
+                  multiple = FALSE,
+                  accept = c("text/csv",
+                             "text/comma-separated-values,text/plain",
+                             ".csv")),
+        fileInput("lecat_corpus_file", "Choose Corpus File",
+                  multiple = FALSE,
+                  accept = c("text/csv",
+                             "text/comma-separated-values,text/plain",
+                             ".csv")),
+        fileInput("lecat_lookup_table_file", "Choose Lookup Table File",
+                  multiple = FALSE,
+                  accept = c("text/csv",
+                             "text/comma-separated-values,text/plain",
+                             ".csv")),
+        hr(),
+        actionButton(
+          inputId = 'lecat_run_analysis_button',
+          label = 'Run LE-CAT analysis'),
+
+        actionButton(
+          inputId = 'lecat_generate_network_button',
+          label = 'Generate co-occurence graph'),
+        hr(),
+        downloadButton(
+          'lecat_download_raw',
+          'Raw output'),
+        downloadButton(
+          'lecat_download_diagnostics',
+          'Diagnostics'),
+        downloadButton(
+          'lecat_download_network',
+          'Network')
       ),
       mainPanel(
         h5('Instructions'),
@@ -115,7 +145,18 @@ navbarPage(
                   two types of queries: technology and influencers. You can specify that searches
                   for the technology based queries are done in the video description column of
                   the corpus anf influencer queries are searched for in video title. You can download
-                  an example lookup table for the example just outlined by clicking on the button on the left.')
+                  an example lookup table for the example just outlined by clicking on the button on the left.'),
+          hr(),
+          h5('Lexicon'),
+          DT::dataTableOutput('lecat_lexicon'),
+          hr(),
+          h5('Corpus'),
+          DT::dataTableOutput('lecat_corpus'),
+          hr(),
+          h5('Lookup Table'),
+          DT::dataTableOutput('lecat_lookup_table'),
+          hr(),
+          DT::dataTableOutput('lecat_raw_result')
         )
       )
     )
