@@ -25,7 +25,7 @@ extract_video_ids <- function(urls, resolve = TRUE, inShiny = FALSE){
     bad_urls <- urls[!youtube_url_check]
     new_urls <- NULL
     if (inShiny){
-      shiny::withProgress(message = 'Trying to resolve non-YoTube URLs', value = 0, {
+      shiny::withProgress(message = 'Trying to resolve non-YouTube URLs', value = 0, {
         i <- 1
         n <- length(bad_urls)
         for (url in bad_urls) {

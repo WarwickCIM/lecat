@@ -12,12 +12,17 @@ function(input, output, session) {
     youtube_descriptions = data.frame(
       descriptions = 'No descriptions donwloaded from YouTube',
       stringsAsFactors = FALSE
+    ),
+    lecat_lexicon = data.frame(
+      Type = 'No lexicon loaded yet',
+      stringsAsFactors = FALSE
     )
   )
 
   # Render the current values of items in the data object
   output$youtube_urls <- DT::renderDataTable(DT::datatable(data$youtube_urls, options = list(pageLength = 5)))
   output$youtube_descriptions <- DT::renderDataTable(data$youtube_descriptions)
+  output$lecat_lexicon <- DT::renderDataTable(data$lecat_lexicon)
 
   # State flags for controlling UI -------------------------------------
 
@@ -94,4 +99,9 @@ function(input, output, session) {
       write.table(x = data$youtube_descriptions, sep = '\t', file = file, row.names = FALSE)
     }
   )
+
+  ## LE-CAT Analysis
+
+  # Example files
+
 }

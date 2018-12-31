@@ -83,8 +83,41 @@ navbarPage(
   tabPanel(
     'LE-CAT Data Analysis',
     sidebarLayout(
-      sidebarPanel(),
-      mainPanel()
+      sidebarPanel(
+        p('Example files:'),
+        downloadButton(
+          'lecat_example_lexicon_button',
+          'Lexicon'),
+        br(),
+        br(),
+        downloadButton(
+          'lecat_example_corpus_button',
+          'Corpus'),
+        br(),
+        br(),
+        downloadButton(
+          'lecat_example_lookup_table_button',
+          'Lookup Table')
+      ),
+      mainPanel(
+        h5('Instructions'),
+        p('LE-CAT requires three files to work.'),
+        tags$ol(
+          tags$li('A lexicon file containing queries, the corresponding category and type.
+                  The file should have columns titled Type, Category, and Query. Each query
+                  after the first query should be in an additional row. You can download an
+                  example lexicon file by clicking on the button on the left.'),
+          tags$li('A corpus file where each row is an item. For example, each row in the YouTube
+                  description file corresponds to a single video. Each column should correspond
+                  to a type of data about each item (e.g., the video description, the video ID'),
+          tags$li('A lookup table with the columns Type and column. The lookup table tells LE-CAT
+                  which corpus columns should be searched by query type. For example, you may have
+                  two types of queries: technology and influencers. You can specify that searches
+                  for the technology based queries are done in the video description column of
+                  the corpus anf influencer queries are searched for in video title. You can download
+                  an example lookup table for the example just outlined by clicking on the button on the left.')
+        )
+      )
     )
   )
 )
