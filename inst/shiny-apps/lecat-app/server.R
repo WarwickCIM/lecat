@@ -10,7 +10,7 @@ function(input, output, session) {
       stringsAsFactors = FALSE
     ),
     youtube_descriptions = data.frame(
-      descriptions = 'No descriptions donwloaded from YouTube',
+      descriptions = 'No descriptions downloaded from YouTube',
       stringsAsFactors = FALSE
     ),
     lecat_lexicon = data.frame(
@@ -28,16 +28,57 @@ function(input, output, session) {
     lecat_raw_result = data.frame(
       Type = 'LECAT not run yet',
       stringsAsFactors = FALSE
-    )
+    ),
+    lecat_diagnostics = data.frame(
+      Type = 'No diagnostics created yet',
+      stringsAsFactors = FALSE
+    ),
+    lecat_cotable = data.frame(
+      Type = 'Cooccurrence table not generated yet',
+      stringsAsFactors = FALSE
+    ),
+    lecat_network = data.frame(),
+    corpus_loaded = FALSE,
+    lexicon_loaded = FALSE,
+    lookup_table_loaded = FALSE,
+    lecat_analysis_complete = FALSE
   )
 
+  # These objects are the example lecat files
+  example_lexicon <- data.frame(
+    Type = c('technology', 'influencers'),
+    Category = c('Apple', 'CIM'),
+    Query = c('iphone', 'Noortje Marres'),
+    Query1 = c('iPad', 'James Tripp'),
+    Query3 = c('imac', ''),
+    stringsAsFactors = FALSE
+  )
+
+  example_corpus <- data.frame(
+    id = c(1,2,3),
+    title = c(' James Tripp talks about LE-CAT',
+              ' Noortje Marres interview',
+              'New iphone'),
+    description = c('In this iphone and ipad delivered lecture James talks about a new tool.',
+                    'An interesting interview',
+                    'Apple has launched a series of iphones, ipads and imacs.'),
+    stringsAsFactors = FALSE
+  )
+
+  example_lookup_table <- data.frame(
+    Type = c('technology', 'influencers'),
+    Column = c('description', 'title'),
+    stringsAsFactors = FALSE)
+
   # Render the current values of items in the data object
-  output$youtube_urls <- DT::renderDataTable(DT::datatable(data$youtube_urls, options = list(pageLength = 5)))
-  output$youtube_descriptions <- DT::renderDataTable(data$youtube_descriptions)
-  output$lecat_lexicon <- DT::renderDataTable(data$lecat_lexicon)
-  output$lecat_corpus <- DT::renderDataTable(data$lecat_corpus)
-  output$lecat_lookup_table <- DT::renderDataTable(data$lecat_lookup_table)
-  output$lecat_raw_result <- DT::renderDataTable(data$lecat_raw_result)
+  output$youtube_urls <- DT::renderDataTable(DT::datatable(data$youtube_urls, options = list(pageLength = 5, scrollX = TRUE)))
+  output$youtube_descriptions <- DT::renderDataTable(data$youtube_descriptions, options = list(pageLength = 5, scrollX = TRUE))
+  output$lecat_lexicon <- DT::renderDataTable(data$lecat_lexicon, options = list(pageLength = 5, scrollX = TRUE))
+  output$lecat_corpus <- DT::renderDataTable(data$lecat_corpus, options = list(pageLength = 5, scrollX = TRUE))
+  output$lecat_lookup_table <- DT::renderDataTable(data$lecat_lookup_table, options = list(pageLength = 5, scrollX = TRUE))
+  output$lecat_raw_result <- DT::renderDataTable(data$lecat_raw_result, options = list(pageLength = 5, scrollX = TRUE))
+  output$lecat_diagnostics <- DT::renderDataTable(data$lecat_diagnostics, options = list(pageLength = 5, scrollX = TRUE))
+  output$lecat_cotable <- DT::renderDataTable(data$lecat_cotable, options = list(pageLength = 5, scrollX = TRUE))
 
   # State flags for controlling UI -------------------------------------
 
@@ -57,8 +98,24 @@ function(input, output, session) {
     }
   )
 
+  output$lecat_flag <- reactive(
+    if (data$corpus_loaded & data$lexicon_loaded & data$lookup_table_loaded) {
+      'lecat_ready'
+    } else {
+      'lecat_not_ready'
+    }
+  )
+
+  output$lecat_analysis_flag <- reactive(
+    if (data$lecat_analysis_complete) {
+      'analysis_complete'
+    }
+  )
+
   # Set flags as evaluated despite not being displayed in ui
   outputOptions(output, 'youtube_flag', suspendWhenHidden = FALSE)
+  outputOptions(output, 'lecat_flag', suspendWhenHidden = FALSE)
+  outputOptions(output, 'lecat_analysis_flag', suspendWhenHidden = FALSE)
 
   # Data manipulation in response to UI -------------------------------
 
@@ -67,7 +124,9 @@ function(input, output, session) {
     req(input$youtube_url_file)
     tryCatch(
       {
-        data$youtube_urls <- read.csv(input$youtube_url_file$datapath, stringsAsFactors = FALSE)
+        data$youtube_urls <- read.csv(input$youtube_url_file$datapath,
+                                      header = FALSE,
+                                      stringsAsFactors = FALSE)
       },
       error = function(e) {
         # return a safeError if a parsing error occurs
@@ -109,7 +168,7 @@ function(input, output, session) {
 
   # When user clicks on the Download YouTube Descriptions button
   output$youtube_data_file_download_button <- downloadHandler(
-    filename = paste0("download_", Sys.Date(),".csv"),
+    filename = paste0("lecat_youtube_descriptions_", Sys.Date(),".csv"),
     content = function(file) {
       write.table(x = data$youtube_descriptions, sep = '\t', file = file, row.names = FALSE)
     }
@@ -118,46 +177,24 @@ function(input, output, session) {
   ## LE-CAT Analysis
 
   # Example file download buttons
-  output$lecat_example_lexicon_button <- downloadHandler(
-    filename = paste0("lecat_lexicon_example", Sys.Date(),".csv"),
+  # Buttons for downloading example files
+  output$download_lecat_example<- downloadHandler(
+    filename = function() {
+      paste(input$lecat_example, ".csv", sep = "")
+    },
     content = function(file) {
-      write.table(x = data.frame(
-        Type = c('technology', 'influencers'),
-        Category = c('Apple', 'CIM'),
-        Query = c('iphone', 'Noortje Marres'),
-        Query1 = c('iPad', 'James Tripp'),
-        Query3 = c('imac', ''),
-        stringsAsFactors = FALSE
-      ), sep = ',', file = file, row.names = FALSE)
+      write.csv(lecat_example_file(), file, row.names = FALSE)
     }
   )
 
-  output$lecat_example_corpus_button <- downloadHandler(
-    filename = paste0("lecat_example_corpus_", Sys.Date(),".csv"),
-    content = function(file) {
-      write.table(x = data.frame(
-        ID = c(1,2,3),
-        title = c('James Tripp talks about LE-CAT',
-                  'Noortje Marres interview',
-                  'New iphone'),
-        description = c('In this iphone and ipad delivered lecture James talks about a new tool.',
-                        'An interesting interview',
-                        'Apple has launched a series of iphones, ipads and imacs.'),
-        stringsAsFactors = FALSE
-      ), sep = ',', file = file, row.names = FALSE)
-    }
-  )
-
-  output$lecat_example_lookup_table_button <- downloadHandler(
-    filename = paste0("lecat_example_lookup_table", Sys.Date(),".csv"),
-    content = function(file) {
-      write.table(x = data.frame(
-        Type = c('technology', 'influencers'),
-        column = c('description', 'title'),
-        stringsAsFactors = FALSE
-      ), sep = ',', file = file, row.names = FALSE)
-    }
-  )
+  # Switch for above
+  lecat_example_file <- reactive({
+    switch(input$lecat_example,
+           "Lexicon" = example_lexicon,
+           "Corpus" = example_corpus,
+           "Lookup_Table" = example_lookup_table
+    )
+  })
 
   # Load lexicon, lookup table and corpus
   observeEvent(input$lecat_lexicon_file, {
@@ -167,6 +204,7 @@ function(input, output, session) {
       {
         x  <- read.csv(input$lecat_lexicon_file$datapath, stringsAsFactors = FALSE)
         data$lecat_lexicon <- parse_lexicon(x)
+        data$lexicon_loaded <- TRUE
       },
       error = function(e) {
         # return a safeError if a parsing error occurs
@@ -179,7 +217,10 @@ function(input, output, session) {
     req(input$lecat_corpus_file)
     tryCatch(
       {
-        data$lecat_corpus <- read.csv(input$lecat_corpus_file$datapath, stringsAsFactors = FALSE)
+        data$lecat_corpus <- read.csv(input$lecat_corpus_file$datapath,
+                                      sep = input$corpus_sep,
+                                      stringsAsFactors = FALSE)
+        data$corpus_loaded <- TRUE
       },
       error = function(e) {
         # return a safeError if a parsing error occurs
@@ -192,7 +233,9 @@ function(input, output, session) {
     req(input$lecat_lookup_table_file)
     tryCatch(
       {
-        data$lecat_lookup_table <- read.csv(input$lecat_lookup_table_file$datapath, stringsAsFactors = FALSE)
+        data$lecat_lookup_table <- read.csv(input$lecat_lookup_table_file$datapath,
+                                            stringsAsFactors = FALSE)
+        data$lookup_table_loaded <- TRUE
       },
       error = function(e) {
         # return a safeError if a parsing error occurs
@@ -208,9 +251,51 @@ function(input, output, session) {
       lexicon = data$lecat_lexicon,
       corpus = data$lecat_corpus,
       searches = data$lecat_lookup_table,
-      id = 'ID',
-      regex_expression = '\\Wquery\\W'
+      id = 'id',
+      regex_expression = input$lecat_analysis_regex,
+      inShiny = TRUE
       )
-    print(x)
+    data$lecat_raw_result <- x
+    shiny::showNotification('Generating diagnostics')
+    data$lecat_diagnostics <- create_unique_total_diagnostics(x)
+    data$lecat_analysis_complete <- TRUE
   })
+
+  # When user select to generate the cotable and network graph
+  observeEvent(input$lecat_generate_network_button, {
+    shiny::showNotification('Generating cooccurrence table and network graph')
+    x <- create_cooccurrence_graph(data$lecat_raw_result,
+                                   level = input$lecat_network_level,
+                                   inShiny = TRUE)
+    data$lecat_cotable <- x$cotable
+    data$lecat_network <- x$graph
+  })
+
+  # Buttons for downloading lecat output
+  output$download_lecat_output<- downloadHandler(
+    filename = function() {
+      if (input$lecat_output == 'network') {
+        paste0('lecat_', input$lecat_output, Sys.Date(), ".graphml", sep = "")
+      } else {
+        paste0('lecat_', input$lecat_output,Sys.Date(), ".csv", sep = "")
+      }
+    },
+    content = function(file) {
+      if (input$lecat_output == 'network') {
+        igraph::write_graph(lecat_output_file(), file, format = 'graphml')
+      } else {
+        write.csv(lecat_output_file(), file, row.names = FALSE)
+      }
+    }
+  )
+
+  # Switch for above
+  lecat_output_file <- reactive({
+    switch(input$lecat_output,
+           "raw" = data$lecat_raw_result,
+           "cotable" = data$lecat_cotable,
+           "diagnostics" = data$lecat_diagnostics,
+           "network" = data$lecat_network)
+  })
+
 }
