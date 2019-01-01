@@ -6,7 +6,7 @@
 \usage{
 create_cooccurrence_graph(lecat_result,
   graph_filename = "result.graphml", cotable_filename = "cotable.csv",
-  level = "Query")
+  level = "Query", inShiny = FALSE)
 }
 \arguments{
 \item{lecat_result}{result from the \link[lecat]{run_lecat_analysis} function}
@@ -16,6 +16,8 @@ create_cooccurrence_graph(lecat_result,
 \item{cotable_filename}{filename of the generated cooccurrence table}
 
 \item{level}{Level of cooccurence. Either 'Query', 'Category' or 'Type'}
+
+\item{inShiny}{If inShiny is TRUE then shiny based notifications will be shown}
 }
 \value{
 cooccurence table (At present.)
