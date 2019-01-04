@@ -1,3 +1,4 @@
+require(lecat)
 function(input, output, session) {
 
   # Reactive values for storing persistent data -----------------------
