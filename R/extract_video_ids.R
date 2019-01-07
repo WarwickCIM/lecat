@@ -16,12 +16,21 @@ extract_video_ids <- function(urls, resolve = TRUE, inShiny = FALSE){
   nice_url_message <- paste(sum(youtube_url_check), 'of your URLs appear to be YouTube URLs')
   nasty_url_message <- paste(sum(!youtube_url_check), 'of your URLs appear not to be YouTube URLs')
   # display notification on shiny if app is running else through R console
-  ifelse(inShiny, shiny::showNotification(nice_url_message, type = 'message', duration = 2), message(nice_url_message))
-  ifelse(inShiny, shiny::showNotification(nasty_url_message, type = 'message', duration = 2), message(nasty_url_message))
+  if (inShiny) {
+    shiny::showNotification(nice_url_message, type = 'message', duration = 2)
+    shiny::showNotification(nice_url_message, type = 'message', duration = 2)
+  } else {
+    message(nice_url_message)
+    message(nasty_url_message)
+  }
   good_urls <- urls[youtube_url_check]
   if (resolve & (sum(!youtube_url_check) > 0)) {
     url_resolve_message <- paste('Trying to resolve', sum(!youtube_url_check), 'URLs')
-    ifelse(inShiny, shiny::showNotification(url_resolve_message, type = 'message', duration = 2), message(url_resolve_message))
+    if (inShiny) {
+      shiny::showNotification(url_resolve_message, type = 'message', duration = 2)
+    } else {
+      message(url_resolve_message)
+    }
     bad_urls <- urls[!youtube_url_check]
     new_urls <- NULL
     if (inShiny){
@@ -41,7 +50,11 @@ extract_video_ids <- function(urls, resolve = TRUE, inShiny = FALSE){
     }
     new_youtube_url_check <- grepl(pattern = 'www.youtube.com/watch?v=', x = new_urls, fixed = TRUE)
     result_message <- paste(sum(new_youtube_url_check), 'of your URLs were able to be resolved to a YouTube URL')
-    ifelse(inShiny, shiny::showNotification( result_message, type = 'message', duration = 2), message( result_message))
+    if (inShiny) {
+      shiny::showNotification(result_message, type = 'message', duration = 2)
+    } else {
+      message( result_message)
+    }
     if (sum(new_youtube_url_check) > 0) {
       good_urls <- c(good_urls, new_urls[new_youtube_url_check])
     }

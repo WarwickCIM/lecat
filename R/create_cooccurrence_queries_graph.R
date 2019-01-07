@@ -16,7 +16,6 @@ create_cooccurrence_query_graph <- function(lecat_result, filename = NULL){
   n_col <- ncol(lecat_result)
   pb <- utils::txtProgressBar(min = 1, max = nrow(lecat_result), initial = 1)
   for (x in 1:nrow(lecat_result)) {
-    #message('Row ', x, ' of ', nrow(lecat_result))
     this_x <- lecat_result$Query[x]
     for (y in 1:nrow(lecat_result)) {
       this_y <- lecat_result$Query[y]
