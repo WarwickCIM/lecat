@@ -32,9 +32,18 @@ You can install the released version of lecat from [Github](https://github.com/)
 
 ``` r
 install.packages("devtools")
-library(devtools)
-install_github("jamestripp/lecat")
+devtools::install_github("jamestripp/lecat")
 ```
+
+## Interfaces to the package
+
+The package includes functions to run the analysis and also a Shiny interface to the functions. The Shiny interface can be started by entering the command.
+
+``` r
+lecat::run_app()
+```
+
+The below example assumes you are not running the shiny app.
 
 ## Example
 
@@ -160,19 +169,25 @@ where the first number in the brackets is the total occurance and second is the 
 
 #### Cooccurance
 
-You may calculate the cooccurance of queries (irrespective of the corresponding Type and Category) using the create_cooccurrence_queries_graph function
+You may calculate the cooccurance of queries (irrespective of the corresponding Type and Category) using the create_cooccurrence_graph function
 
 ``` r
-cooccurrence <- create_cooccurrence_query_graph(lecat_result = lecat_result, 
-                                                filename = 'result.graphml')
+cooccurrence <- create_cooccurrence_graph(lecat_result = lecat_result,
+                                          level = 'Query')
 
 ```
 
 __Note__ Creating the cooccurence graph can take a lot of time depending on the size of corpus and lexicon.
 
-If a filename is specified then the a graphml file is created. The Type, Category and Column_examined are attributes of the nodes and the weight of the edges are the cooccurance of the queries. You may view graphml network graphs using the excellent [Gephi](https://gephi.org) program. __Note__ if you have duplicate edges (where there are edges between node1-node2 and node2-node1 then select merge first withing Gephi).
+You can calculate cooccurance based on the categories by changing the level argument to 'Category'.
 
-This function also returns a cooccurance table and the igraph object. One can plot the graph using the igraph package by passing igraph object to the plot function.
+By default the files 'result.graphml' and 'cotable.csv' are created in the working directory. 
+
+The result.grapml file contains a network of the cooccurences. The Type, Category and Column_examined are attributes of the nodes and the weight of the edges are the cooccurance of the queries. You may view graphml network graphs using the excellent [Gephi](https://gephi.org) program. __Note__ if you have duplicate edges (where there are edges between node1-node2 and node2-node1 then select merge first withing Gephi).
+
+The cotable.csv file is a table of the cooccurences. This file can be loaded into programs such as Excel, LibreOffice or R.
+
+The create_cooccurrence_graph function returns a list containing the cooccurence table as a data frame and the cooccurence network as an igraph network. The igraph object may be useful as the igraph package contains many functions for calculating statistics on the generated netowrk. You may also plot the object in R using the following command:
 
 ``` r
 plot(cooccurrence$graph)

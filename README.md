@@ -36,9 +36,19 @@ You can install the released version of lecat from
 
 ``` r
 install.packages("devtools")
-library(devtools)
-install_github("jamestripp/lecat")
+devtools::install_github("jamestripp/lecat")
 ```
+
+## Shiny App
+
+The package includes user interface written with the Shiny package. Run
+the following command to start the interface.
+
+``` r
+lecat::run_app()
+```
+
+## Package functions
 
 ## Example
 
