@@ -41,7 +41,7 @@ navbarPage(
     'YouTube Data Collection',
     sidebarLayout(
       sidebarPanel(
-        textInput(inputId = 'youtube_key', label = 'YouTube API key:', value = 'AIzaSyBGikBaMzNwzr7xIP-0PHqojYSyJvRboOU'),
+        textInput(inputId = 'youtube_key', label = 'YouTube API key:', value = ''),
         br(),
         fileInput("youtube_url_file", "Choose CSV File",
                     multiple = FALSE,

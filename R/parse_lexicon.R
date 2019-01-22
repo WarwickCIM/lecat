@@ -19,6 +19,7 @@ parse_lexicon <- function(wide_lexicon, type_column = 'Type', category_column = 
   assertive::assert_is_character(category_column)
   assertive::assert_is_character(query_column)
   assertive::assert_is_data.frame(wide_lexicon)
+  wide_lexicon <- wide_lexicon[!apply(is.na(wide_lexicon) | wide_lexicon == "", 1, all),]
   long_lexicon <- NULL
   for (i in 1:nrow(wide_lexicon)){
     these_queries <- wide_lexicon[i, which(colnames(wide_lexicon) == query_column):length(names(wide_lexicon))]
