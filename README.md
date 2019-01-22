@@ -39,16 +39,17 @@ install.packages("devtools")
 devtools::install_github("jamestripp/lecat")
 ```
 
-## Shiny App
+## Interfaces to the package
 
-The package includes user interface written with the Shiny package. Run
-the following command to start the interface.
+The package includes functions to run the analysis and also a Shiny
+interface to the functions. The Shiny interface can be started by
+entering the command.
 
 ``` r
 lecat::run_app()
 ```
 
-## Package functions
+The below example assumes you are not running the shiny app.
 
 ## Example
 
@@ -211,28 +212,38 @@ Type, Category and Query occur in.
 #### Cooccurance
 
 You may calculate the cooccurance of queries (irrespective of the
-corresponding Type and Category) using the
-create\_cooccurrence\_queries\_graph
+corresponding Type and Category) using the create\_cooccurrence\_graph
 function
 
 ``` r
-cooccurrence <- create_cooccurrence_query_graph(lecat_result = lecat_result, 
-                                                filename = 'result.graphml')
+cooccurrence <- create_cooccurrence_graph(lecat_result = lecat_result,
+                                          level = 'Query')
 ```
 
 **Note** Creating the cooccurence graph can take a lot of time depending
 on the size of corpus and lexicon.
 
-If a filename is specified then the a graphml file is created. The Type,
+You can calculate cooccurance based on the categories by changing the
+level argument to ‘Category’.
+
+By default the files ‘result.graphml’ and ‘cotable.csv’ are created in
+the working directory.
+
+The result.grapml file contains a network of the cooccurences. The Type,
 Category and Column\_examined are attributes of the nodes and the weight
 of the edges are the cooccurance of the queries. You may view graphml
 network graphs using the excellent [Gephi](https://gephi.org) program.
 **Note** if you have duplicate edges (where there are edges between
 node1-node2 and node2-node1 then select merge first withing Gephi).
 
-This function also returns a cooccurance table and the igraph object.
-One can plot the graph using the igraph package by passing igraph object
-to the plot function.
+The cotable.csv file is a table of the cooccurences. This file can be
+loaded into programs such as Excel, LibreOffice or R.
+
+The create\_cooccurrence\_graph function returns a list containing the
+cooccurence table as a data frame and the cooccurence network as an
+igraph network. The igraph object may be useful as the igraph package
+contains many functions for calculating statistics on the generated
+netowrk. You may also plot the object in R using the following command:
 
 ``` r
 plot(cooccurrence$graph)
