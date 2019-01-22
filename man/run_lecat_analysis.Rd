@@ -4,7 +4,8 @@
 \alias{run_lecat_analysis}
 \title{run_lecat_analysis}
 \usage{
-run_lecat_analysis(lexicon, corpus, searches, id, regex_expression)
+run_lecat_analysis(lexicon, corpus, searches, id, regex_expression,
+  inShiny = FALSE)
 }
 \arguments{
 \item{lexicon}{Lexicon dataframe as parsed by the \link[lecat]{parse_lexicon} function}
@@ -16,6 +17,8 @@ run_lecat_analysis(lexicon, corpus, searches, id, regex_expression)
 \item{id}{Column name to use for identifying differing corpus samples (e.g., YouTube video id)}
 
 \item{regex_expression}{Regex expression defining search. String defining the regex expression where the string 'query' will be replaced by the actual query term}
+
+\item{inShiny}{If inShiny is TRUE then shiny based notifications will be shown}
 }
 \value{
 run_lecat_analysis returns a data frame containing the lexicon, the corresponding search column for the query type and the frequency of terms by corpus id
