@@ -3,6 +3,9 @@
 
 # LE-CAT
 
+[![Build
+Status](https://travis-ci.org/jamestripp/lecat.svg?branch=master)](https://travis-ci.org/jamestripp/lecat)
+
 LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by
 the Centre for Interdisciplinary Methodologies in collaboration with the
 Media of Cooperation Group at the University of Siegen.
