@@ -39,7 +39,7 @@ You can install the released version of lecat from
 
 ``` r
 install.packages("devtools")
-devtools::install_github("jamestripp/lecat")
+devtools::install_github("warwickCIM/lecat")
 ```
 
 ## Interfaces to the package
