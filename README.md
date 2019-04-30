@@ -6,7 +6,7 @@
 [![DOI](https://zenodo.org/badge/161813229.svg)](https://zenodo.org/badge/latestdoi/161813229)
 
 [![Build
-Status](https://travis-ci.org/jamestripp/lecat.svg?branch=master)](https://travis-ci.org/jamestripp/lecat)
+Status](https://travis-ci.org/WarwickCIM/lecat.svg?branch=master)](https://travis-ci.org/WarwickCIM/lecat)
 
 LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by
 the Centre for Interdisciplinary Methodologies in collaboration with the
