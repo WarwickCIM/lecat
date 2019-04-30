@@ -3,6 +3,8 @@
 
 # LE-CAT
 
+[![DOI](https://zenodo.org/badge/161813229.svg)](https://zenodo.org/badge/latestdoi/161813229)
+
 [![Build
 Status](https://travis-ci.org/jamestripp/lecat.svg?branch=master)](https://travis-ci.org/jamestripp/lecat)
 
