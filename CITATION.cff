@@ -10,6 +10,9 @@ authors:
 - given-names: James
   family-names: Tripp
   affiliation: University of Warwick
+- given-names: Noortje
+  family-names: Marres
+  affiliation: University of Warwick
 version: '1.9000'
 date-released: 2019-04-30
 repository-code: https://github.com/WarwickCIM/lecat
