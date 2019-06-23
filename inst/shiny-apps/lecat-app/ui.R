@@ -12,7 +12,7 @@ navbarPage(theme = shinythemes::shinytheme("cerulean"),
         p('3. Load your files within the interface and then click on the run LE-CAT analysis button and, optionally, the Calculate cooccurence button')
       ),
       mainPanel(
-        h5('V0.5 Pre-release. Under GPL3.0 License.'),
+        h5('V1.0. Under GPL3.0 License.'),
         p('LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by the Centre
           for Interdisciplinary Methodologies in collaboration with the',
           a(href = 'https://www.mediacoop.uni-siegen.de/en/','Media of Cooperation'),
