@@ -20,7 +20,7 @@ RUN R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cloud.r-proje
 
 # install dependencies of the euler app
 RUN R -e "install.packages('devtools', repos='https://cloud.r-project.org/')"
-RUN R -e "devtools::install_github('jamestripp/lecat', ref = 'dev')"
+RUN R -e "devtools::install_github('warwickcim/lecat')"
 
 EXPOSE 3838
 
