@@ -23,4 +23,6 @@ Imports:
     stats,
     utils,
     shiny,
-    DT
+    DT,
+    openxlsx,
+    shinythemes

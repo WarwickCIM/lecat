@@ -1,4 +1,4 @@
-navbarPage(
+navbarPage(theme = shinythemes::shinytheme("cerulean"),
   title = 'LE-CAT',
   tabPanel(
     'About',
@@ -97,7 +97,8 @@ navbarPage(
                   multiple = FALSE,
                   accept = c("text/csv",
                              "text/comma-separated-values,text/plain",
-                             ".csv")),
+                             ".csv",
+                             ".xlsx")),
         radioButtons("corpus_sep", "Separator",
                      choices = c(Comma = ",",
                                  Semicolon = ";",
@@ -116,6 +117,10 @@ navbarPage(
             label = 'Regex',
             value = '\\Wquery\\W'
           ),
+          checkboxInput(
+            inputId = "lecat_case_sensitive",
+            label = "Case sensitive", FALSE
+            ),
           actionButton(
             inputId = 'lecat_run_analysis_button',
             label = 'Run LE-CAT analysis'

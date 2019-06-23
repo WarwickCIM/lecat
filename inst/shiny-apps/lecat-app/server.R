@@ -1,4 +1,5 @@
 require(lecat)
+options(shiny.maxRequestSize=900*1024^2)
 function(input, output, session) {
 
   # Reactive values for storing persistent data -----------------------
@@ -204,8 +205,13 @@ function(input, output, session) {
     tryCatch(
       {
         x  <- read.csv(input$lecat_lexicon_file$datapath, stringsAsFactors = FALSE)
-        data$lecat_lexicon <- parse_lexicon(x)
-        data$lexicon_loaded <- TRUE
+        at_lease_one_query <- sum(grepl(pattern = 'Query', x = names(x), ignore.case = FALSE)) > 1
+        if(('Type' %in% names(x)) & ('Category' %in% names(x)) & at_lease_one_query) {
+          data$lecat_lexicon <- parse_lexicon(x)
+          data$lexicon_loaded <- TRUE
+        } else {
+          shiny::showNotification('Lexicon not loaded: Column names Type, Category and Query required', type = 'error')
+        }
       },
       error = function(e) {
         # return a safeError if a parsing error occurs
@@ -216,27 +222,54 @@ function(input, output, session) {
 
   observeEvent(input$lecat_corpus_file, {
     req(input$lecat_corpus_file)
-    tryCatch(
-      {
-        data$lecat_corpus <- read.csv(input$lecat_corpus_file$datapath,
-                                      sep = input$corpus_sep,
-                                      stringsAsFactors = FALSE)
-        data$corpus_loaded <- TRUE
-      },
-      error = function(e) {
-        # return a safeError if a parsing error occurs
-        stop(safeError(e))
-      }
-    )
+    if(grepl(x = input$lecat_corpus_file$datapath, pattern = '.csv')) {
+      tryCatch(
+        {
+          data$lecat_corpus <- read.csv(input$lecat_corpus_file$datapath,
+                                        sep = input$corpus_sep,
+                                        stringsAsFactors = FALSE)
+          data$corpus_loaded <- TRUE
+        },
+        error = function(e) {
+          # return a safeError if a parsing error occurs
+          stop(safeError(e))
+        }
+      )
+    } else if(grepl(x = input$lecat_corpus_file$datapath, pattern = '.xlsx')) {
+      tryCatch(
+        {
+          data$lecat_corpus <- openxlsx::read.xlsx(input$lecat_corpus_file$datapath)
+          data$corpus_loaded <- TRUE
+        },
+        error = function(e) {
+          # return a safeError if a parsing error occurs
+          stop(safeError(e))
+        }
+      )
+    } else {
+      stop(safeError('File format not found'))
+    }
   })
 
   observeEvent(input$lecat_lookup_table_file, {
     req(input$lecat_lookup_table_file)
     tryCatch(
       {
-        data$lecat_lookup_table <- read.csv(input$lecat_lookup_table_file$datapath,
-                                            stringsAsFactors = FALSE)
-        data$lookup_table_loaded <- TRUE
+        lookup_table <- read.csv(input$lecat_lookup_table_file$datapath,
+                                        stringsAsFactors = FALSE)
+        if (('Type' %in% names(lookup_table)) & ('Column' %in% names(lookup_table))) {
+          lookup_table <- unique(lookup_table[,c('Type', 'Column')])
+          if (sum(!complete.cases(lookup_table)) > 0) { # if there are rows with missing Type or Column}
+            n_incomplete_cases <- sum(!complete.cases(lookup_table))
+            shiny::showNotification(paste('Removing', n_incomplete_cases, 'rows without Type or Column'), type = 'warning')
+            lookup_table <- lookup_table[complete.cases(lookup_table),]
+          }
+          # remove any empty rows
+          data$lecat_lookup_table <- lookup_table
+          data$lookup_table_loaded <- TRUE
+        } else {
+          shiny::showNotification('Lookup Table not loaded: Column names Type and Column required', type = 'error')
+        }
       },
       error = function(e) {
         # return a safeError if a parsing error occurs
@@ -252,9 +285,9 @@ function(input, output, session) {
       lexicon = data$lecat_lexicon,
       corpus = data$lecat_corpus,
       searches = data$lecat_lookup_table,
-      id = 'id',
       regex_expression = input$lecat_analysis_regex,
-      inShiny = TRUE
+      inShiny = TRUE,
+      case_sensitive = input$lecat_case_sensitive
       )
     data$lecat_raw_result <- x
     shiny::showNotification('Generating diagnostics')
