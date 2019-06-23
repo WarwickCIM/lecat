@@ -205,7 +205,7 @@ function(input, output, session) {
     tryCatch(
       {
         x  <- read.csv(input$lecat_lexicon_file$datapath, stringsAsFactors = FALSE)
-        at_lease_one_query <- sum(grepl(pattern = 'Query', x = names(x), ignore.case = FALSE)) > 1
+        at_lease_one_query <- sum(grepl(pattern = 'Query', x = names(x), ignore.case = FALSE)) > 0
         if(('Type' %in% names(x)) & ('Category' %in% names(x)) & at_lease_one_query) {
           data$lecat_lexicon <- parse_lexicon(x)
           data$lexicon_loaded <- TRUE
@@ -280,19 +280,27 @@ function(input, output, session) {
 
   # When user selects to run a LE-CAT analysis
   observeEvent(input$lecat_run_analysis_button, {
-    shiny::showNotification('Running lecat analysis')
-    x <- run_lecat_analysis(
-      lexicon = data$lecat_lexicon,
-      corpus = data$lecat_corpus,
-      searches = data$lecat_lookup_table,
-      regex_expression = input$lecat_analysis_regex,
-      inShiny = TRUE,
-      case_sensitive = input$lecat_case_sensitive
+    # Check that our various inputs match up
+    lookup_table_types <- unique(data$lecat_lookup_table$Type)
+    lexicon_types <- unique(data$lecat_lexicon$Type)
+    message(lookup_table_types %in% lexicon_types)
+    if (mean(lookup_table_types %in% lexicon_types) == 1) {
+      shiny::showNotification('Running lecat analysis')
+      x <- run_lecat_analysis(
+        lexicon = data$lecat_lexicon,
+        corpus = data$lecat_corpus,
+        searches = data$lecat_lookup_table,
+        regex_expression = input$lecat_analysis_regex,
+        inShiny = TRUE,
+        case_sensitive = input$lecat_case_sensitive
       )
-    data$lecat_raw_result <- x
-    shiny::showNotification('Generating diagnostics')
-    data$lecat_diagnostics <- create_unique_total_diagnostics(x)
-    data$lecat_analysis_complete <- TRUE
+      data$lecat_raw_result <- x
+      shiny::showNotification('Generating diagnostics')
+      data$lecat_diagnostics <- create_unique_total_diagnostics(x)
+      data$lecat_analysis_complete <- TRUE
+    } else {
+      shiny::showNotification('Lookup table types do not match lexicon types. Please check these files', type = 'error')
+    }
   })
 
   # When user select to generate the cotable and network graph
