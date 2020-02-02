@@ -129,7 +129,8 @@ navbarPage(theme = shinythemes::shinytheme("cerulean"),
           selectInput(
             inputId = 'lecat_network_level',
             'Nodes:',
-            choices = c('Type', 'Category', 'Query')
+            #choices = c('Type', 'Category', 'Query')
+            choices = 'Query'
           ),
           actionButton(
             inputId = 'lecat_generate_network_button',
