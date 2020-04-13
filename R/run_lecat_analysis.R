@@ -30,10 +30,14 @@ run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expres
   run_search <- function(strings, query, regex, type, category, ids, column, case_sensitive){
     # correctly add backslash to any special character for regex search
     #query <- stringr::str_replace_all(query, "([{\\[()|?$^*+.\\\\])", "\\$1")
+
     if (!case_sensitive) {
+      #query <- stringr::str_to_lower(query)
       query <- tolower(query)
+      #strings <- stringr::str_to_lower(strings)
       strings <- tolower(strings)
     }
+
     this_pattern <- stringr::str_replace(string = regex, pattern = 'query', replacement = query)
     counts <- stringr::str_count(string = strings, pattern = this_pattern)
     result <- data.frame(Type = type, Category = category, Query = query, Column_examined = column, stringsAsFactors = FALSE)

@@ -225,9 +225,10 @@ function(input, output, session) {
     if(grepl(x = input$lecat_corpus_file$datapath, pattern = '.csv')) {
       tryCatch(
         {
-          data$lecat_corpus <- read.csv(input$lecat_corpus_file$datapath,
-                                        sep = input$corpus_sep,
-                                        stringsAsFactors = FALSE)
+          data$lecat_corpus <- readr::read_csv(file = input$lecat_corpus_file$datapath)
+          #data$lecat_corpus <- read.csv(input$lecat_corpus_file$datapath,
+          #                              sep = input$corpus_sep,
+          #                              stringsAsFactors = FALSE)
           data$corpus_loaded <- TRUE
         },
         error = function(e) {

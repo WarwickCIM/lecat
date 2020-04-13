@@ -25,4 +25,5 @@ Imports:
     shiny,
     DT,
     openxlsx,
-    shinythemes
+    shinythemes,
+    tidyverse

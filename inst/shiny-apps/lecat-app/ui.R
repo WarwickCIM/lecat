@@ -1,4 +1,4 @@
-navbarPage(theme = shinythemes::shinytheme("cerulean"),
+navbarPage(theme = shinythemes::shinytheme("united"),
   title = 'LE-CAT',
   tabPanel(
     'About',
@@ -37,50 +37,50 @@ navbarPage(theme = shinythemes::shinytheme("cerulean"),
         )
       )
     ),
+  #tabPanel(
+  #  'YouTube Data Collection',
+  #  sidebarLayout(
+  #    sidebarPanel(
+  #      textInput(inputId = 'youtube_key', label = 'YouTube API key:', value = ''),
+  #      br(),
+  #      fileInput("youtube_url_file", "Choose CSV File",
+  #                  multiple = FALSE,
+  #                  accept = c("text/csv",
+  #                             "text/comma-separated-values,text/plain",
+  #                             ".csv")
+  #      ),
+  #      hr(),
+  #      actionButton(
+  #        inputId = 'youtube_description_download_button',
+  #        label = 'Get from YouTube'
+  #      ),
+  #      br(),
+  #      br(),
+  #        downloadButton("youtube_data_file_download_button",
+  #                       "Download Output")
+  #    ),
+  #  mainPanel(
+  #      condition = "output.youtube_flag == 'initial_state'",
+  #      h5('Instructions'),
+  #      p('Here you can download YouTube descriptions for use with LE-CAT.
+  #        Please make sure you have the following at hand:'),
+  #      tags$ul(
+  #        tags$li('A CSV file containing one or more YouTube URLs.
+  #        The URL should be similiar to https://www.youtube.com/watch?v=fjskfjdue'),
+  #        tags$li('If you are using the app via R or Rstudio then a YouTube API key.
+  #           Students using LE-CAT via the Warwick servers do not need a YouTube API key.')
+  #      ),
+  #      hr(),
+  #      h5('YouTube URLs:'),
+  #      DT::dataTableOutput('youtube_urls'),
+  #      hr(),
+  #      h5('YouTube Descriptions:'),
+  #      DT::dataTableOutput('youtube_descriptions')
+  #    )
+  #  )
+  #),
   tabPanel(
-    'YouTube Data Collection',
-    sidebarLayout(
-      sidebarPanel(
-        textInput(inputId = 'youtube_key', label = 'YouTube API key:', value = ''),
-        br(),
-        fileInput("youtube_url_file", "Choose CSV File",
-                    multiple = FALSE,
-                    accept = c("text/csv",
-                               "text/comma-separated-values,text/plain",
-                               ".csv")
-        ),
-        hr(),
-        actionButton(
-          inputId = 'youtube_description_download_button',
-          label = 'Get from YouTube'
-        ),
-        br(),
-        br(),
-          downloadButton("youtube_data_file_download_button",
-                         "Download Output")
-      ),
-    mainPanel(
-        condition = "output.youtube_flag == 'initial_state'",
-        h5('Instructions'),
-        p('Here you can download YouTube descriptions for use with LE-CAT.
-          Please make sure you have the following at hand:'),
-        tags$ul(
-          tags$li('A CSV file containing one or more YouTube URLs.
-          The URL should be similiar to https://www.youtube.com/watch?v=fjskfjdue'),
-          tags$li('If you are using the app via R or Rstudio then a YouTube API key.
-             Students using LE-CAT via the Warwick servers do not need a YouTube API key.')
-        ),
-        hr(),
-        h5('YouTube URLs:'),
-        DT::dataTableOutput('youtube_urls'),
-        hr(),
-        h5('YouTube Descriptions:'),
-        DT::dataTableOutput('youtube_descriptions')
-      )
-    )
-  ),
-  tabPanel(
-    'LE-CAT Data Analysis',
+    'Analysis',
     sidebarLayout(
       sidebarPanel(
         selectInput("lecat_example", "Choose example file:",
@@ -192,14 +192,14 @@ navbarPage(theme = shinythemes::shinytheme("cerulean"),
                              DT::dataTableOutput('lecat_lookup_table')
                              ),
                     tabPanel("Output",
-                             h5('Raw LE-CAT output'),
-                             DT::dataTableOutput('lecat_raw_result'),
-                             hr(),
+                             #h5('Raw LE-CAT output'),
+                             #DT::dataTableOutput('lecat_raw_result'),
+                             #hr(),
                              h5('LE-CAT diagnostics'),
                              DT::dataTableOutput('lecat_diagnostics'),
-                             hr(),
-                             h5('Cooccurence table'),
-                             DT::dataTableOutput('lecat_cotable')
+                             #hr(),
+                             #h5('Cooccurence table'),
+                             #DT::dataTableOutput('lecat_cotable')
                              )
         )
         )
