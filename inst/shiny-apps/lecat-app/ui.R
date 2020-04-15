@@ -36,50 +36,51 @@ fluidPage(
                 accept = ".xlsx"),
 
       # Conditional panel displayed when lecat is ready ----
-      conditionalPanel(
-        condition = "output.lecat_flag == 'lecat_ready'",
+       conditionalPanel(
+         condition = "output.lecat_flag == 'lecat_ready'",
 
-        tags$h5('Analysis'),
+         tags$h5('Analysis'),
 
-        # Text input for regex query ----
-        textInput(
-          inputId = 'lecat_analysis_regex',
-          label = 'Regex',
-          value = '\\Wquery\\W'
-        ),
+         # Text input for regex query ----
+         textInput(
+           inputId = 'lecat_analysis_regex',
+           label = 'Regex',
+           value = '\\Wquery\\W'
+         ),
 
-        # Checkbox input for case sensitivity ----
-        checkboxInput(
-          inputId = "lecat_case_sensitive",
-          label = "Case sensitive", FALSE
-          ),
+         # Checkbox input for case sensitivity ----
+         checkboxInput(
+           inputId = "lecat_case_sensitive",
+           label = "Case sensitive", FALSE
+           ),
 
-        # Action button to start lecat analysis ----
-        actionButton(
-          inputId = 'lecat_run_analysis_button',
-          label = 'Run LE-CAT analysis'
-          ),
-
-        br(),
-
-        # Select input for network level  ----
-        selectInput(
-          inputId = 'lecat_network_level',
-          'Nodes:',
-          #choices = c('Type', 'Category', 'Query')
-          choices = 'Query'
-        ),
-
-        # Action button to generate the cooccurence network ----
-        actionButton(
-          inputId = 'lecat_generate_network_button',
-          label = 'Calculate cooccurence'
-          )
-        ),
+         # Action button to start lecat analysis ----
+         actionButton(
+           inputId = 'lecat_run_analysis_button',
+           label = 'Run LE-CAT analysis'
+           )
+         ),
 
         # Conditional panel displaying output options once analysis is complete ----
         conditionalPanel(
           condition = "output.lecat_analysis_flag == 'analysis_complete'",
+          br(),
+
+          # Select input for network level  ----
+          selectInput(
+            inputId = 'lecat_network_level',
+            'Nodes:',
+            choices = c('Type', 'Category', 'Query')
+            #choices = 'Query'
+          ),
+
+          # Action button to generate the cooccurence network ----
+          actionButton(
+            inputId = 'lecat_generate_network_button',
+            label = 'Calculate cooccurence'
+          ),
+
+          br(),
           tags$h5('Output'),
           selectInput("lecat_output", "Choose output file:",
                       choices = c("raw", 'diagnostics', "cotable", "network")),
@@ -91,13 +92,13 @@ fluidPage(
     mainPanel(
 
       # Tab set panel containing about, guide and data tabs ----
-      tabsetPanel(type = "tabs",
+      tabsetPanel(type = "tabs", id = "main_tabs",
 
                   # Tab containing LE-CAT project information ----
                   tabPanel('About',
 
                            br(),
-                           h5('V1.0. Under GPL3.0 License.'),
+                           h5('V1.5. Under GPL3.0 License.'),
                            p('LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by the Centre
                               for Interdisciplinary Methodologies in collaboration with the',
                            a(href = 'https://www.mediacoop.uni-siegen.de/en/','Media of Cooperation'),
@@ -123,7 +124,7 @@ fluidPage(
                     tabPanel("Guide",
 
                              br(),
-                             p('LE-CAT requires three files to work.'),
+                             p('LE-CAT requires three files to work. All of these should be Excel (.xlsx) files.'),
                              tags$ul(
                                tags$li('A lexicon. The file contains queries you wish to search for in the corpus and
                                        the associated category and type.'),
@@ -131,30 +132,15 @@ fluidPage(
                                tags$li('A lookup table. A table instructing LE-CAT which column of the corpus to search
                                        for query types.')
                              ),
-                             p('You can download templates for these files at the top of the left column of this page.
-                               LE-CAT requires the files to be formatted in this way. Your corpus must have a column titled
-                               id which identifies each row.'),
-                             strong('Guide, Input, Output'),
-                             p('The tabs above show either this guide, the contents of the currently loaded Input files
-                               and the Output tables. If no file has been loaded then the you will placeholder text.'),
                              strong('Walkthrough'),
                              tags$ol(
-                               tags$li('Load in the lexicon, corpus and lookup table. You can click on Browse or drag and
-                                       drop the file. You can select how the corpus file is seperated. If the corpus does not
-                                       look correct in the input tab then try a different seperator option (e.g., comma).
-                                       The analysis section will appear below once all the files are uploaded.'),
-                               tags$li('Click on the Run LE-CAT analysis button. You can set your own regex query. The default
-                                       searches for the query term with a non-character either side. If you wish to specify your own
-                                       then include the word query - the word query is replaced with the actual query when the analysis
-                                       is run. The analysis may take some time.'),
-                               tags$li('(Optional) Select which level you would like the cooccurrence graph and table calculated.
-                                       You may wish to see cooccurence at the query, category or type level. Calculating
-                                       cooccurence at the query level may take a long time if you have many queries. The output
-                                       download options will be shown once the cooccurrences have been calculated.'),
-                               tags$li('Select and download either the raw output, diagnostics, cooccurence table or network graph of
-                                       cooccurences. The network graph can be viewed within Gephi.')
-                               )
-
+                               tags$li('Download the example Lexicon, Corpus and Lookup Table. Modify these files to suite your needs.'),
+                               tags$li('Upload the modified files to LE-CAT by clicking Browse and choosing the file. The Analysis section will appear once all three files are uploaded.'),
+                               tags$li('Click on the Data tab to check the Lookup Table and Lexicon files appear correctly. The Lexicon will be altered to "long format" with 1 query per row.'),
+                               tags$li('Search the corpus for your queries by clicking on "Run LE-CAT Analysis". The LE-CAT diagnostics will be shown in the Data tab once the analysis is complete.'),
+                               tags$li('LE-CAT offers co-occurence analysis. You can investigate how often queries, types or categories co-occur. Select your desired level of co-occurrence then click "Calculate co-occurence". A co-occurence table and network file are now available to download.'),
+                               tags$li('All the output files are available to download. Click on the drop down menu to select a file and then press Download.')
+                             )
                              ),
 
                     # Tab panel containing the data output ----

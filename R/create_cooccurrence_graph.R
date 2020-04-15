@@ -17,12 +17,8 @@ create_cooccurrence_graph <- function(lecat_result, graph_filename = 'result.gra
   assertive::assert_is_character(graph_filename)
   assertive::assert_is_character(cotable_filename)
   assertive::assert_is_character(level)
+
   lecat_result <- lecat_result[,colSums(is.na(lecat_result))<nrow(lecat_result)]
-  # force set level to Query due to crashes
-  # if (level == 'Category'|level == 'Type') {
-  #   message('Type and Category currently not available. Level set to "Query"')
-  #   level <- 'Query'
-  # }
 
   # notify if user is trying to aggregate only one item (e.g., co-occurance of Type when there is only 1 type)
   if ((level == 'Query') & (length(unique(lecat_result$Query)) < 2) ) {
