@@ -15,16 +15,29 @@
 #' to this function then a long format lexicon is returned. The long format
 #' lexicon has the columns Type, Category and Query.
 parse_lexicon <- function(wide_lexicon, type_column = 'Type', category_column = 'Category', query_column = 'Query'){
+
+  # ensure arguments are correct type
   assertive::assert_is_character(type_column)
   assertive::assert_is_character(category_column)
   assertive::assert_is_character(query_column)
   assertive::assert_is_data.frame(wide_lexicon)
+
   wide_lexicon <- wide_lexicon[!apply(is.na(wide_lexicon) | wide_lexicon == "", 1, all),]
+
   long_lexicon <- NULL
-  for (i in 1:nrow(wide_lexicon)){
+  for (i in 1:nrow(wide_lexicon)){ # for every row in lexicon
+
+    # pick out queries from row. Allows for multiple queries
     these_queries <- wide_lexicon[i, which(colnames(wide_lexicon) == query_column):length(names(wide_lexicon))]
+
+    # remove na and empty queries
     these_queries <- these_queries[!is.na(these_queries)]
     these_queries <- these_queries[these_queries != '']
+
+    # add a new data frame to existing long_lexicon.
+    # new dataframe has the structure
+    #     Type_a, Category_a, query_1
+    #     Type_a, Category_a, query_2
     long_lexicon <- rbind(
       long_lexicon,
       data.frame(
@@ -34,6 +47,9 @@ parse_lexicon <- function(wide_lexicon, type_column = 'Type', category_column = 
         stringsAsFactors = FALSE
       )
     )
+
   }
+
+  # return long lexicon
   long_lexicon
 }

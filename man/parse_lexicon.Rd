@@ -4,8 +4,12 @@
 \alias{parse_lexicon}
 \title{parse_lexicon}
 \usage{
-parse_lexicon(wide_lexicon, type_column = "Type",
-  category_column = "Category", query_column = "Query")
+parse_lexicon(
+  wide_lexicon,
+  type_column = "Type",
+  category_column = "Category",
+  query_column = "Query"
+)
 }
 \arguments{
 \item{wide_lexicon}{Data frame with one row per category containing type, category and the corresponding queries}

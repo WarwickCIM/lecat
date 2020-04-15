@@ -12,74 +12,85 @@
 #' @param case_sensitive If case_sensitive is TRUE then the search will be case sensitive
 #'
 #' @return run_lecat_analysis returns a data frame containing the lexicon, the corresponding search column for the query type and the frequency of terms by corpus id
-run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expression, inShiny = FALSE, case_sensitive = FALSE){
+run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expression = '\\Wquery\\W', inShiny = FALSE, case_sensitive = FALSE){
+
+  # check types of input variables
   assertive::assert_is_data.frame(lexicon)
   assertive::assert_is_data.frame(corpus)
   assertive::assert_is_data.frame(searches)
   assertive::assert_is_character(regex_expression)
 
-  # Create an id column if none is provided
-  if(is.nan(id)){
-    message('Creating ID column')
-    corpus$auto_id_column <- as.character(1:nrow(corpus))
-    id <- 'auto_id_column'
+  # convert everything to lower case if not case sensitive
+  if(!case_sensitive) {
+    lexicon$Queries <- stringr::str_to_lower(lexicon$Queries)
+
+    # set each column in the corpus to lower case
+    for (col_name in names(corpus)) {
+      corpus[, col_name] <-  lapply(X = corpus[, col_name], FUN = stringr::str_to_lower)
+    }
   }
 
+  # Create custom ID
+  message('Creating ID column')
+  corpus$auto_id_column <- as.character(1:nrow(corpus))
+  id <- 'auto_id_column'
+
+  # Check id type here in case id is default NaN
   assertive::assert_is_character(id)
 
-  run_search <- function(strings, query, regex, type, category, ids, column, case_sensitive){
-    # correctly add backslash to any special character for regex search
-    #query <- stringr::str_replace_all(query, "([{\\[()|?$^*+.\\\\])", "\\$1")
+   out <- NULL
 
-    if (!case_sensitive) {
-      #query <- stringr::str_to_lower(query)
-      query <- tolower(query)
-      #strings <- stringr::str_to_lower(strings)
-      strings <- tolower(strings)
-    }
+   # output dataframe
+   result <-
+     data.frame(
+       Type = rep(NaN, nrow(lexicon)),
+       Category = rep(NaN, nrow(lexicon)),
+       Query = rep(NaN, nrow(lexicon)),
+       Column_examined = rep(NaN, nrow(lexicon)),
+       stringsAsFactors = FALSE
+     )
 
-    this_pattern <- stringr::str_replace(string = regex, pattern = 'query', replacement = query)
-    counts <- stringr::str_count(string = strings, pattern = this_pattern)
-    result <- data.frame(Type = type, Category = category, Query = query, Column_examined = column, stringsAsFactors = FALSE)
-    result <- cbind(result, as.data.frame(t(counts), stringsAsFactors = FALSE))
-    names(result)[5:length(result)] <- ids
-    result
-  }
-  out <- NULL
-  if (inShiny) {
-    n <- nrow(lexicon)
-    shiny::withProgress(message = 'Searching corpus', value = 0, {
-      for (i in 1:nrow(lexicon)) {
-        shiny::incProgress(1/n, detail = paste("query", i))
-        this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
-        out <- rbind(out,
-                     run_search(corpus[,this_search_column],
+   counts_df <-
+     as.data.frame(matrix(
+       data = rep(NaN, nrow(lexicon) * nrow(corpus)),
+       nrow = nrow(lexicon),
+       ncol = nrow(corpus)
+     ))
+
+   result <- cbind(result, counts_df, stringsAsFactors = FALSE)
+
+   if (inShiny) {
+     n <- nrow(lexicon)
+     shiny::withProgress(message = 'Searching corpus', value = 0, {
+       for (i in 1:nrow(lexicon)) {
+         shiny::incProgress(1/n, detail = paste("query", i))
+         this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
+         #out <- rbind(out,
+          result[i,] <- run_search(corpus[,this_search_column],
+                                 lexicon$Queries[i],
+                                 regex_expression, lexicon$Type[i],
+                                 lexicon$Category[i],
+                                 corpus[,id],
+                                 this_search_column)
+         #)
+       }
+     })
+   } else {
+     pb <- utils::txtProgressBar(min = 1, max = nrow(lexicon), initial = 1)
+     for (i in 1:nrow(lexicon)) {
+       utils::setTxtProgressBar(pb, i)
+       this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
+       #out <- rbind(out,
+       result[i,] <- run_search(corpus[,this_search_column],
                                 lexicon$Queries[i],
                                 regex_expression, lexicon$Type[i],
                                 lexicon$Category[i],
                                 corpus[,id],
-                                this_search_column,
-                                case_sensitive)
-        )
-      }
-    })
-  } else {
-    pb <- utils::txtProgressBar(min = 1, max = nrow(lexicon), initial = 1)
-    for (i in 1:nrow(lexicon)) {
-      utils::setTxtProgressBar(pb, i)
-      this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
-      out <- rbind(out,
-                   run_search(corpus[,this_search_column],
-                              lexicon$Queries[i],
-                              regex_expression, lexicon$Type[i],
-                              lexicon$Category[i],
-                              corpus[,id],
-                              this_search_column,
-                              case_sensitive)
-      )
-    }
-    close(pb)
-  }
+                                this_search_column)
+       #)
+     }
+     close(pb)
+   }
 
-  out
+   result
 }

@@ -1,0 +1,31 @@
+"node1.Type","node2.Type","node1","node2","cooccurence"
+NA,NA,"Actors","Elements",71
+NA,NA,"Actors","Locations",587
+NA,NA,"Actors","Mobile objects",627
+NA,NA,"Actors","Peripherals",619
+NA,NA,"Actors","Places",861
+NA,NA,"Elements","Actors",71
+NA,NA,"Elements","Locations",118
+NA,NA,"Elements","Mobile objects",83
+NA,NA,"Elements","Peripherals",119
+NA,NA,"Elements","Places",125
+NA,NA,"Locations","Actors",587
+NA,NA,"Locations","Elements",118
+NA,NA,"Locations","Mobile objects",815
+NA,NA,"Locations","Peripherals",514
+NA,NA,"Locations","Places",1522
+NA,NA,"Mobile objects","Actors",627
+NA,NA,"Mobile objects","Elements",83
+NA,NA,"Mobile objects","Locations",815
+NA,NA,"Mobile objects","Peripherals",667
+NA,NA,"Mobile objects","Places",1147
+NA,NA,"Peripherals","Actors",619
+NA,NA,"Peripherals","Elements",119
+NA,NA,"Peripherals","Locations",514
+NA,NA,"Peripherals","Mobile objects",667
+NA,NA,"Peripherals","Places",621
+NA,NA,"Places","Actors",861
+NA,NA,"Places","Elements",125
+NA,NA,"Places","Locations",1522
+NA,NA,"Places","Mobile objects",1147
+NA,NA,"Places","Peripherals",621

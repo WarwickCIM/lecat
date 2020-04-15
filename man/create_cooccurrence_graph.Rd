@@ -4,9 +4,13 @@
 \alias{create_cooccurrence_graph}
 \title{create_cooccurrence_graph}
 \usage{
-create_cooccurrence_graph(lecat_result,
-  graph_filename = "result.graphml", cotable_filename = "cotable.csv",
-  level = "Query", inShiny = FALSE)
+create_cooccurrence_graph(
+  lecat_result,
+  graph_filename = "result.graphml",
+  cotable_filename = "cotable.csv",
+  level = "Query",
+  inShiny = FALSE
+)
 }
 \arguments{
 \item{lecat_result}{result from the \link[lecat]{run_lecat_analysis} function}

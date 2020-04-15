@@ -4,8 +4,15 @@
 \alias{run_lecat_analysis}
 \title{run_lecat_analysis}
 \usage{
-run_lecat_analysis(lexicon, corpus, searches, id = NaN, regex_expression,
-  inShiny = FALSE, case_sensitive = FALSE)
+run_lecat_analysis(
+  lexicon,
+  corpus,
+  searches,
+  id = NaN,
+  regex_expression = "\\\\Wquery\\\\W",
+  inShiny = FALSE,
+  case_sensitive = FALSE
+)
 }
 \arguments{
 \item{lexicon}{Lexicon dataframe as parsed by the \link[lecat]{parse_lexicon} function}
