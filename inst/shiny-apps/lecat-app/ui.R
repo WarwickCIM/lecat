@@ -98,7 +98,7 @@ fluidPage(
                   tabPanel('About',
 
                            br(),
-                           h5('V1.5. Under GPL3.0 License.'),
+                           h5('V1.7. Under GPL3.0 License.'),
                            p('LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by the Centre
                               for Interdisciplinary Methodologies in collaboration with the',
                            a(href = 'https://www.mediacoop.uni-siegen.de/en/','Media of Cooperation'),
