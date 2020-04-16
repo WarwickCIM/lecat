@@ -6,31 +6,38 @@
 <!-- Created by igraph -->
   <key id="v_name" for="node" attr.name="name" attr.type="string"/>
   <key id="v_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="v_Type" for="node" attr.name="Type" attr.type="string"/>
   <key id="e_weight" for="edge" attr.name="weight" attr.type="double"/>
   <graph id="G" edgedefault="undirected">
     <node id="n0">
-      <data key="v_name">Actors</data>
-      <data key="v_label">Actors</data>
+      <data key="v_name">f</data>
+      <data key="v_label">f</data>
+      <data key="v_Type">Actors</data>
     </node>
     <node id="n1">
-      <data key="v_name">Elements</data>
-      <data key="v_label">Elements</data>
+      <data key="v_name">d</data>
+      <data key="v_label">d</data>
+      <data key="v_Type">Elements</data>
     </node>
     <node id="n2">
-      <data key="v_name">Locations</data>
-      <data key="v_label">Locations</data>
+      <data key="v_name">b</data>
+      <data key="v_label">b</data>
+      <data key="v_Type">Locations</data>
     </node>
     <node id="n3">
-      <data key="v_name">Mobile objects</data>
-      <data key="v_label">Mobile objects</data>
+      <data key="v_name">a</data>
+      <data key="v_label">a</data>
+      <data key="v_Type">Mobile objects</data>
     </node>
     <node id="n4">
-      <data key="v_name">Peripherals</data>
-      <data key="v_label">Peripherals</data>
+      <data key="v_name">e</data>
+      <data key="v_label">e</data>
+      <data key="v_Type">Peripherals</data>
     </node>
     <node id="n5">
-      <data key="v_name">Places</data>
-      <data key="v_label">Places</data>
+      <data key="v_name">c</data>
+      <data key="v_label">c</data>
+      <data key="v_Type">Places</data>
     </node>
     <edge source="n0" target="n1">
       <data key="e_weight">142</data>

@@ -90,67 +90,6 @@ function(input, output, session) {
   output$lecat_lookup_table <- DT::renderDataTable(data$lecat_lookup_table, options = list(pageLength = 5, scrollX = TRUE))
   output$lecat_diagnostics <- DT::renderDataTable(data$lecat_diagnostics, options = list(pageLength = 5, scrollX = TRUE))
 
-  # Function to check if we should add the analysis tab ----
-  add_analysis_tab_check <- function() {
-    # display Analyis tab if all the file are uploaded
-    if (data$lookup_table_loaded & data$corpus_loaded & data$lookup_table_loaded) {
-      # Add the output tab
-      # appendTab(inputId = 'main_tabs',
-      #           tab = tabPanel(
-      #             id = 'analysisTab',
-      #             title = 'Analysis',
-      #             value = "Analysis_tab",
-      #             tags$h5('Analysis'),
-      #
-      #             # Text input for regex query ----
-      #             textInput(
-      #               inputId = 'lecat_analysis_regex',
-      #               label = 'Regex',
-      #               value = '\\Wquery\\W'
-      #             ),
-      #
-      #             # Checkbox input for case sensitivity ----
-      #             checkboxInput(
-      #               inputId = "lecat_case_sensitive",
-      #               label = "Case sensitive", FALSE
-      #             ),
-      #
-      #             # Action button to start lecat analysis ----
-      #             actionButton(
-      #               inputId = 'lecat_run_analysis_button',
-      #               label = 'Run LE-CAT analysis'
-      #             ),
-      #
-      #             # Select input for network level  ----
-      #             selectInput(
-      #               inputId = 'lecat_network_level',
-      #               'Nodes:',
-      #               choices = c('Type', 'Category', 'Query')
-      #               #choices = 'Query'
-      #             ),
-      #
-      #             # Action button to generate the cooccurence network ----
-      #             actionButton(
-      #               inputId = 'lecat_generate_network_button',
-      #               label = 'Calculate cooccurence'
-      #             ),
-      #
-      #             br(),
-      #             tags$h5('Output'),
-      #             selectInput("lecat_output", "Choose output file:",
-      #                         choices = c("raw", 'diagnostics', "cotable", "network")),
-      #             downloadButton("download_lecat_output", "Download")
-      #           ),
-      #
-      #           select = TRUE,
-      #           menuName = NULL,
-      #           session = getDefaultReactiveDomain()
-      # )
-    }
-  }
-
-  ### Below flags are changed to reflect the app status and change the UI accordingly
-
   # Flag checking if lookup table, corpus and lexicon are loaded ----
   output$lecat_flag <- reactive(
     if (data$corpus_loaded & data$lexicon_loaded & data$lookup_table_loaded) {
@@ -213,7 +152,6 @@ function(input, output, session) {
           data$lecat_lexicon <- parse_lexicon(x)
           data$lexicon_loaded <- TRUE
 
-          add_analysis_tab_check()
         } else {
           if (!at_least_one_query) {
             shiny::showNotification('Lexicon not loaded: Two or more queries required', type = 'error')
@@ -242,7 +180,6 @@ function(input, output, session) {
           data$lecat_corpus <- readxl::read_excel(input$lecat_corpus_file$datapath)
           data$corpus_loaded <- TRUE
 
-          add_analysis_tab_check()
         },
         error = function(e) {
           # return a safeError if a parsing error occurs
@@ -284,9 +221,6 @@ function(input, output, session) {
 
           # record the lookup table has been uploaded
           data$lookup_table_loaded <- TRUE
-
-          # display Analysis tab if all files loaded
-          add_analysis_tab_check()
 
         } else {
 
@@ -335,8 +269,7 @@ function(input, output, session) {
       shiny::showNotification('Generating diagnostics. Please wait.')
 
       # Create diagnostic summary and assign into reactive value
-      #data$lecat_diagnostics <- create_unique_total_diagnostics(x)
-      data$lecat_diagnostics <- create_unique_total_diagnostics_faster(x)
+      data$lecat_diagnostics <- create_unique_total_diagnostics(x, inShiny = TRUE)
 
       shiny::showNotification('Diagnostics generated')
 

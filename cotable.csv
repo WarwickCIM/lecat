@@ -1,31 +1,31 @@
 "node1.Type","node2.Type","node1","node2","cooccurence"
-NA,NA,"Actors","Elements",71
-NA,NA,"Actors","Locations",587
-NA,NA,"Actors","Mobile objects",627
-NA,NA,"Actors","Peripherals",619
-NA,NA,"Actors","Places",861
-NA,NA,"Elements","Actors",71
-NA,NA,"Elements","Locations",118
-NA,NA,"Elements","Mobile objects",83
-NA,NA,"Elements","Peripherals",119
-NA,NA,"Elements","Places",125
-NA,NA,"Locations","Actors",587
-NA,NA,"Locations","Elements",118
-NA,NA,"Locations","Mobile objects",815
-NA,NA,"Locations","Peripherals",514
-NA,NA,"Locations","Places",1522
-NA,NA,"Mobile objects","Actors",627
-NA,NA,"Mobile objects","Elements",83
-NA,NA,"Mobile objects","Locations",815
-NA,NA,"Mobile objects","Peripherals",667
-NA,NA,"Mobile objects","Places",1147
-NA,NA,"Peripherals","Actors",619
-NA,NA,"Peripherals","Elements",119
-NA,NA,"Peripherals","Locations",514
-NA,NA,"Peripherals","Mobile objects",667
-NA,NA,"Peripherals","Places",621
-NA,NA,"Places","Actors",861
-NA,NA,"Places","Elements",125
-NA,NA,"Places","Locations",1522
-NA,NA,"Places","Mobile objects",1147
-NA,NA,"Places","Peripherals",621
+"Actors","Elements","f","d",71
+"Actors","Locations","f","b",587
+"Actors","Mobile objects","f","a",627
+"Actors","Peripherals","f","e",619
+"Actors","Places","f","c",861
+"Elements","Actors","d","f",71
+"Elements","Locations","d","b",118
+"Elements","Mobile objects","d","a",83
+"Elements","Peripherals","d","e",119
+"Elements","Places","d","c",125
+"Locations","Actors","b","f",587
+"Locations","Elements","b","d",118
+"Locations","Mobile objects","b","a",815
+"Locations","Peripherals","b","e",514
+"Locations","Places","b","c",1522
+"Mobile objects","Actors","a","f",627
+"Mobile objects","Elements","a","d",83
+"Mobile objects","Locations","a","b",815
+"Mobile objects","Peripherals","a","e",667
+"Mobile objects","Places","a","c",1147
+"Peripherals","Actors","e","f",619
+"Peripherals","Elements","e","d",119
+"Peripherals","Locations","e","b",514
+"Peripherals","Mobile objects","e","a",667
+"Peripherals","Places","e","c",621
+"Places","Actors","c","f",861
+"Places","Elements","c","d",125
+"Places","Locations","c","b",1522
+"Places","Mobile objects","c","a",1147
+"Places","Peripherals","c","e",621

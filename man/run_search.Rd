@@ -11,8 +11,7 @@ run_search(
   type,
   category,
   ids,
-  column,
-  case_sensitive
+  column
 )
 }
 \arguments{
@@ -29,8 +28,6 @@ run_search(
 \item{ids}{id of the string}
 
 \item{column}{String column name examined included in the returned dataframe}
-
-\item{case_sensitive}{If case_sensitive is TRUE then the search will be case sensitive}
 }
 \value{
 dataframe with counts of the query in each string

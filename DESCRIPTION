@@ -26,4 +26,5 @@ Imports:
     DT,
     shinythemes,
     tidyverse,
-    writexl
+    writexl,
+    dplyr
