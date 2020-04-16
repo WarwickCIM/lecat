@@ -171,7 +171,7 @@ create_unique_total_diagnostics <- function(lecat_result, inShiny = FALSE){
       # incriment our i variable
       i <- i + 1
     }
+    close(pb)
   }
-  close(pb)
   result
 }
