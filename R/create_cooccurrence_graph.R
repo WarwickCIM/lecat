@@ -99,7 +99,7 @@ create_cooccurrence_graph <- function(lecat_result, graph_filename = 'result.gra
           #Occurence accross stimuli
           that_mat <- as.matrix(agg_data[-i, number_columns])
           # Set rownames
-          rownames(that_mat) <- pull(agg_data[-i, level])
+          rownames(that_mat) <- dplyr::pull(agg_data[-i, level])
 
           # Other nodes
           # Names
@@ -107,7 +107,7 @@ create_cooccurrence_graph <- function(lecat_result, graph_filename = 'result.gra
           # Occurences accross stimuli
           this_mat <- as.matrix(agg_data[i, number_columns])
           # Set rownames
-          row.names(this_mat) <- pull(agg_data[i, level])
+          row.names(this_mat) <- dplyr::pull(agg_data[i, level])
 
           cotable <- rbind(
             cotable,
@@ -126,7 +126,7 @@ create_cooccurrence_graph <- function(lecat_result, graph_filename = 'result.gra
         #Occurence accross stimuli
         that_mat <- as.matrix(agg_data[-i, number_columns])
         # Set rownames
-        rownames(that_mat) <- pull(agg_data[-i, level])
+        rownames(that_mat) <- dplyr::pull(agg_data[-i, level])
 
         # Other nodes
         # Names
@@ -134,7 +134,7 @@ create_cooccurrence_graph <- function(lecat_result, graph_filename = 'result.gra
         # Occurences accross stimuli
         this_mat <- as.matrix(agg_data[i, number_columns])
         # Set rownames
-        row.names(this_mat) <- pull(agg_data[i, level])
+        row.names(this_mat) <- dplyr::pull(agg_data[i, level])
 
         cotable <- rbind(
           cotable,
