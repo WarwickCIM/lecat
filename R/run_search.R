@@ -1,4 +1,4 @@
-#' run_search
+#' Searches a series of strings for a specific query. Used internally by run_lecat_analysis
 #'
 #' Search through a series for queries based on a regex query.
 #'

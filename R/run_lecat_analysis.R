@@ -1,7 +1,6 @@
-#' run_lecat_analysis
+#' Searches for queries in a corpus using a specific regular expression
 #'
-#' The occurance frequency of queries in a corpus is recorded in preperation for
-#' futher analysis by the diagnostics or coocurance functions.
+#' Each corpus element is checked for the presence of a query. The process is repeated for multiple queries. The result is a table of queries and number of matches for each corpus row.
 #'
 #' @param lexicon Lexicon dataframe as parsed by the \link[lecat]{parse_lexicon} function
 #' @param corpus Corpus dataframe containing search columns present in the searches dataframe
@@ -24,10 +23,14 @@ run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expres
   if(!case_sensitive) {
     lexicon$Queries <- stringr::str_to_lower(lexicon$Queries)
 
+    # turn tibble all lower case
+    corpus <- corpus %>%
+      dplyr::mutate_all(.funs = stringr::str_to_lower)
+
     # set each column in the corpus to lower case
-    for (col_name in names(corpus)) {
-      corpus[, col_name] <-  lapply(X = corpus[, col_name], FUN = stringr::str_to_lower)
-    }
+    #for (col_name in names(corpus)) {
+    #  corpus[, col_name] <-  lapply(X = corpus[, col_name], FUN = stringr::str_to_lower)
+    #}
   }
 
   # Create custom ID

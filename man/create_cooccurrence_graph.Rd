@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_cooccurrence_graph.R
 \name{create_cooccurrence_graph}
 \alias{create_cooccurrence_graph}
-\title{create_cooccurrence_graph}
+\title{Create a graph representation of the cooccurences of Types, Categories or Queries}
 \usage{
 create_cooccurrence_graph(
   lecat_result,

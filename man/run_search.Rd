@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_search.R
 \name{run_search}
 \alias{run_search}
-\title{run_search}
+\title{Searches a series of strings for a specific query. Used internally by run_lecat_analysis}
 \usage{
 run_search(
   strings,

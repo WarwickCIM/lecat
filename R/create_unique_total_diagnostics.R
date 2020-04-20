@@ -1,4 +1,4 @@
-#' create_unique_total_diagnostics
+#' Generates diagnostics about the unique and total occurences of Types, Categories and Queries
 #'
 #' Creates a file listing the total occurances of all queries and categories.
 #'

@@ -1,4 +1,4 @@
-#' create_cooccurrence_graph
+#' Create a graph representation of the cooccurences of Types, Categories or Queries
 #'
 #' Creates a cooccurrence graph
 #' @description Calculates the cooccurrence of either Types, Categories or Queries.

@@ -1,4 +1,4 @@
-#' create_cotable
+#' Create a cooccurence table. Used internally by create_coocurrence_graph
 #'
 #' Generates a cooccurence table
 #' @description Calculates a table of cooccurences of a single node to all other nodes. Called by \link[lecat]{create_cooccurrence_graph} function for each node in turn.

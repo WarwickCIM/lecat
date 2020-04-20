@@ -1,0 +1,24 @@
+template:
+  params:
+    bootswatch: flatly
+
+reference:
+- title: "Shiny"
+  desc: "Functions for launching the shiny web application"
+- contents:
+  - run_app
+- title: "Formatting"
+  desc: "Functions to format input files"
+- contents:
+  - parse_lexicon
+- title: "Analysis"
+  desc: "Functions for running the lecat search and generating diagnostics"
+- contents:
+  - run_lecat_analysis
+  - run_search
+  - create_cotable
+- title: "Results"
+  desc: "Functions for creating analysis outputs"
+  contents:
+  - create_unique_total_diagnostics
+  - create_cooccurrence_graph

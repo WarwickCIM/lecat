@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_lecat_analysis.R
 \name{run_lecat_analysis}
 \alias{run_lecat_analysis}
-\title{run_lecat_analysis}
+\title{Searches for queries in a corpus using a specific regular expression}
 \usage{
 run_lecat_analysis(
   lexicon,
@@ -33,6 +33,5 @@ run_lecat_analysis(
 run_lecat_analysis returns a data frame containing the lexicon, the corresponding search column for the query type and the frequency of terms by corpus id
 }
 \description{
-The occurance frequency of queries in a corpus is recorded in preperation for
-futher analysis by the diagnostics or coocurance functions.
+Each corpus element is checked for the presence of a query. The process is repeated for multiple queries. The result is a table of queries and number of matches for each corpus row.
 }

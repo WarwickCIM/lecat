@@ -1,4 +1,4 @@
-#' run_app
+#' Launch the LE-CAT shiny app
 #'
 #' Starts the Shiny App interface for the lecat package
 #' @description The lecat package contains several functions and the run_app

@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_lexicon.R
 \name{parse_lexicon}
 \alias{parse_lexicon}
-\title{parse_lexicon}
+\title{Converts a wide format lexicon file to a long format}
 \usage{
 parse_lexicon(
   wide_lexicon,

@@ -1,4 +1,4 @@
-#' parse_lexicon
+#' Converts a wide format lexicon file to a long format
 #'
 #' Takes a wide format lexicon and creates a long form lexicon file.
 #' The long form lexicon can then be passed to the LE-CAT search function.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_cotable.R
 \name{create_cotable}
 \alias{create_cotable}
-\title{create_cotable}
+\title{Create a cooccurence table. Used internally by create_coocurrence_graph}
 \usage{
 create_cotable(this_mat, that_mat, this_mat_attr, that_mat_attr, level)
 }
