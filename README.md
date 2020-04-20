@@ -6,6 +6,7 @@
 [![Build
 Status](https://travis-ci.org/jamestripp/lecat.svg?branch=master)](https://travis-ci.org/jamestripp/lecat)
 [![DOI](https://zenodo.org/badge/161813229.svg)](https://zenodo.org/badge/latestdoi/161813229)
+[Website](https://warwickcim.github.io/lecat/index.html)
 
 LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by
 the Centre for Interdisciplinary Methodologies in collaboration with the
@@ -31,31 +32,3 @@ Methods](https://warwick.ac.uk/fac/cross_fac/cim/apply-to-study/cross-disciplina
 
 Academic correspondence should be sent to [Noortje
 Marres](mailto:N.Marres@warwick.ac.uk).
-
-## Installation
-
-You can install the released version of lecat from
-[Github](https://github.com/) by running, in R, the following line of
-code:
-
-``` r
-install.packages("devtools")
-devtools::install_github("warwickcim/lecat")
-```
-
-## Web based interface
-
-LE-CAT has a web interface which can be started by running
-
-``` r
-lecat::run_app()
-```
-
-which starts a new [shiny app](https://shiny.rstudio.com).
-
-## Bugs or feature requests
-
-Please enter any bugs or feature requests via github.
-
-[Dr James Tripp](https://jamestripp.github.io), Senior Academic
-Technologist, [CIM](https://www.warwick.ac.uk/cim)
