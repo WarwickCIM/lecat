@@ -1,0 +1,21 @@
+"node1.Type","node1.Category","node2.Type","node2.Category","node1","node2","cooccurence"
+"influencers","CIM","influencers","CIM","james tripp","noortje marres",0
+"influencers","CIM","technology","Apple","james tripp","imac",0
+"influencers","CIM","technology","Apple","james tripp","ipad",0
+"influencers","CIM","technology","Apple","james tripp","iphone",0
+"influencers","CIM","influencers","CIM","noortje marres","james tripp",0
+"influencers","CIM","technology","Apple","noortje marres","imac",0
+"influencers","CIM","technology","Apple","noortje marres","ipad",0
+"influencers","CIM","technology","Apple","noortje marres","iphone",0
+"technology","Apple","influencers","CIM","imac","james tripp",0
+"technology","Apple","influencers","CIM","imac","noortje marres",0
+"technology","Apple","technology","Apple","imac","ipad",0
+"technology","Apple","technology","Apple","imac","iphone",0
+"technology","Apple","influencers","CIM","ipad","james tripp",0
+"technology","Apple","influencers","CIM","ipad","noortje marres",0
+"technology","Apple","technology","Apple","ipad","imac",0
+"technology","Apple","technology","Apple","ipad","iphone",1
+"technology","Apple","influencers","CIM","iphone","james tripp",0
+"technology","Apple","influencers","CIM","iphone","noortje marres",0
+"technology","Apple","technology","Apple","iphone","imac",0
+"technology","Apple","technology","Apple","iphone","ipad",1

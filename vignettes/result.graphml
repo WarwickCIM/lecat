@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="v_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="v_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="v_Type" for="node" attr.name="Type" attr.type="string"/>
+  <key id="v_Category" for="node" attr.name="Category" attr.type="string"/>
+  <key id="e_weight" for="edge" attr.name="weight" attr.type="double"/>
+  <graph id="G" edgedefault="undirected">
+    <node id="n0">
+      <data key="v_name">james tripp</data>
+      <data key="v_label">james tripp</data>
+      <data key="v_Type">influencers</data>
+      <data key="v_Category">CIM</data>
+    </node>
+    <node id="n1">
+      <data key="v_name">noortje marres</data>
+      <data key="v_label">noortje marres</data>
+      <data key="v_Type">influencers</data>
+      <data key="v_Category">CIM</data>
+    </node>
+    <node id="n2">
+      <data key="v_name">imac</data>
+      <data key="v_label">imac</data>
+      <data key="v_Type">technology</data>
+      <data key="v_Category">Apple</data>
+    </node>
+    <node id="n3">
+      <data key="v_name">ipad</data>
+      <data key="v_label">ipad</data>
+      <data key="v_Type">technology</data>
+      <data key="v_Category">Apple</data>
+    </node>
+    <node id="n4">
+      <data key="v_name">iphone</data>
+      <data key="v_label">iphone</data>
+      <data key="v_Type">technology</data>
+      <data key="v_Category">Apple</data>
+    </node>
+    <edge source="n3" target="n4">
+      <data key="e_weight">2</data>
+    </edge>
+  </graph>
+</graphml>
