@@ -2,7 +2,7 @@
 require(lecat)
 
 # Option allowing large file uploads ----
-options(shiny.maxRequestSize=900*1024^2)
+options(shiny.maxRequestSize=9000*1024^2)
 
 function(input, output, session) {
 

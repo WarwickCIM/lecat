@@ -69,6 +69,7 @@ run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expres
          shiny::incProgress(1/n, detail = paste("query", i))
          this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
          #out <- rbind(out,
+         shiny::showNotification(paste('Query:', lexicon$Queries[i]))
           result[i,] <- run_search(corpus[,this_search_column],
                                  lexicon$Queries[i],
                                  regex_expression, lexicon$Type[i],
