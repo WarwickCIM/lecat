@@ -3,6 +3,15 @@ title: "NEWS"
 output: github_document
 ---
 
+lecat v1.90 (Release date: 2020-07-26)
+==============
+
+Changes:
+
+* Fixed and sped up cotable calculations
+* Changed ui for regex
+* Added unit test
+
 lecat v1.80 (Release date: 2020-04-19)
 ==============
 

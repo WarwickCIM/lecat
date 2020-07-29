@@ -13,12 +13,6 @@
 #' @return run_lecat_analysis returns a data frame containing the lexicon, the corresponding search column for the query type and the frequency of terms by corpus id
 run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expression = '\\Wquery\\W', inShiny = FALSE, case_sensitive = FALSE){
 
-  # check types of input variables
-  assertive::assert_is_data.frame(lexicon)
-  assertive::assert_is_data.frame(corpus)
-  assertive::assert_is_data.frame(searches)
-  assertive::assert_is_character(regex_expression)
-
   # convert everything to lower case if not case sensitive
   if(!case_sensitive) {
     lexicon$Queries <- stringr::str_to_lower(lexicon$Queries)
@@ -37,9 +31,6 @@ run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expres
   message('Creating ID column')
   corpus$auto_id_column <- as.character(1:nrow(corpus))
   id <- 'auto_id_column'
-
-  # Check id type here in case id is default NaN
-  assertive::assert_is_character(id)
 
    out <- NULL
 
@@ -85,12 +76,13 @@ run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expres
        utils::setTxtProgressBar(pb, i)
        this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
        #out <- rbind(out,
-       result[i,] <- run_search(corpus[,this_search_column],
-                                lexicon$Queries[i],
-                                regex_expression, lexicon$Type[i],
-                                lexicon$Category[i],
-                                corpus[,id],
-                                this_search_column)
+       result[i,] <- run_search(strings = corpus[,this_search_column],
+                                query = lexicon$Queries[i],
+                                regex = regex_expression,
+                                type = lexicon$Type[i],
+                                category = lexicon$Category[i],
+                                ids = corpus[,id],
+                                column = this_search_column)
        #)
      }
      close(pb)

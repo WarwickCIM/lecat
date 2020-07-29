@@ -291,7 +291,7 @@ function(input, output, session) {
 
     # Create the network
     x <- create_cooccurrence_graph(data$lecat_raw_result,
-                                   level = input$lecat_network_level,
+                                   #level = input$lecat_network_level,
                                    inShiny = TRUE)
 
     # Assign the cotable and graph to the reactive values

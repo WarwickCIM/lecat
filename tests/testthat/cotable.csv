@@ -1,0 +1,5 @@
+"node1","node2","n","node1.Type","node2.Type","Weight"
+"Common words","Common words",NA,"Language","Language",NA
+"Common words","People",3,"Language","Creatures",3
+"People","Common words",3,"Creatures","Language",3
+"People","People",NA,"Creatures","Creatures",NA

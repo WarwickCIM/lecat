@@ -33,7 +33,11 @@ run_search <- function(strings, query, regex = "\\Wquery\\W", type, category, id
       stringsAsFactors = FALSE
     )
 
-  counts_df <- as.data.frame(matrix(data = counts[[1]], nrow = 1, ncol = nrow(strings)))
+  if(!is.data.frame(strings)){
+    strings <- as.data.frame(strings)
+  }
+
+  counts_df <- as.data.frame(matrix(data = as.numeric(unlist(counts)), nrow = 1, ncol = nrow(strings)))
   result <- cbind(result, counts_df, stringsAsFactors = FALSE)
 
   result

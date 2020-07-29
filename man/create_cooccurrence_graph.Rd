@@ -2,24 +2,21 @@
 % Please edit documentation in R/create_cooccurrence_graph.R
 \name{create_cooccurrence_graph}
 \alias{create_cooccurrence_graph}
-\title{Create a graph representation of the cooccurences of Types, Categories or Queries}
+\title{Create a graph representation of the cooccurences of Categories}
 \usage{
 create_cooccurrence_graph(
-  lecat_result,
+  result,
   graph_filename = "result.graphml",
   cotable_filename = "cotable.csv",
-  level = "Query",
   inShiny = FALSE
 )
 }
 \arguments{
-\item{lecat_result}{result from the \link[lecat]{run_lecat_analysis} function}
+\item{result}{result from the \link[lecat]{run_lecat_analysis} function}
 
 \item{graph_filename}{filename of the generated graph file}
 
 \item{cotable_filename}{filename of the generated cooccurrence table}
-
-\item{level}{Level of cooccurence. Either 'Query', 'Category' or 'Type'}
 
 \item{inShiny}{If inShiny is TRUE then shiny based notifications will be shown}
 }
@@ -27,7 +24,7 @@ create_cooccurrence_graph(
 cooccurence table (At present.)
 }
 \description{
-Calculates the cooccurrence of either Types, Categories or Queries.
+Calculates the cooccurrence of Categories.
 A graph object is then created using the \link[igraph]{make_graph} function for
 visualising in Gephi or similiar software.
 }

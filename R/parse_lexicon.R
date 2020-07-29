@@ -16,12 +16,6 @@
 #' lexicon has the columns Type, Category and Query.
 parse_lexicon <- function(wide_lexicon, type_column = 'Type', category_column = 'Category', query_column = 'Query'){
 
-  # ensure arguments are correct type
-  assertive::assert_is_character(type_column)
-  assertive::assert_is_character(category_column)
-  assertive::assert_is_character(query_column)
-  assertive::assert_is_data.frame(wide_lexicon)
-
   wide_lexicon <- wide_lexicon[!apply(is.na(wide_lexicon) | wide_lexicon == "", 1, all),]
 
   long_lexicon <- NULL

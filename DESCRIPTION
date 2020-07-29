@@ -1,7 +1,7 @@
 Package: lecat
 Type: Package
 Title: Lexicon-based Categorization and Analysis Tool
-Version: 1.8
+Version: 1.9
 Author: James Tripp
 Maintainer: James Tripp <james.tripp@warwick.ac.uk>
 Description: LE-CAT is a Lexicon-based Categorization and Analysis Tool developed 
@@ -11,10 +11,9 @@ Description: LE-CAT is a Lexicon-based Categorization and Analysis Tool develope
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Imports:
     igraph,
-    assertive,
     httr,
     urltools,
     curl,
@@ -27,4 +26,7 @@ Imports:
     shinythemes,
     tidyverse,
     writexl,
-    dplyr
+    dplyr,
+    tidyr
+Suggests: 
+    testthat

@@ -14,9 +14,6 @@ create_unique_total_diagnostics <- function(lecat_result, inShiny = FALSE){
   #       currently much code assumes it's a dataframe,
   #       so this will take a while
 
-  # check input arguments
-  assertive::assert_is_data.frame(lecat_result)
-
   # preallocate results dataframe
   result <- data.frame(Type = rep(NaN, length(unique(lecat_result$Type))),
                        Category = NaN,

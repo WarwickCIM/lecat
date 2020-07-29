@@ -1,6 +1,14 @@
 NEWS
 ================
 
+# lecat v1.90 (Release date: 2020-07-26)
+
+Changes:
+
+  - Fixed and sped up cotable calculations
+  - Changed ui for regex
+  - Added unit test
+
 # lecat v1.80 (Release date: 2020-04-19)
 
 Changes:
@@ -8,10 +16,7 @@ Changes:
   - Used pkgdown to create site
   - Redrafted tutorial section to remove reference to previous YouTube
     tool
-  - Altered shiny app interface. Analysis and output options are now
-    located in tabs. Previously these options would appear shortly on
-    load before being hidden
-  - Added diagnostics table output to allow simple analysis raw graph
+  - Rewrote tutorials to package
 
 # lecat v1.70 (Release date: 2020-04-17)
 

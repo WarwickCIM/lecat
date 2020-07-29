@@ -16,7 +16,6 @@ reference:
 - contents:
   - run_lecat_analysis
   - run_search
-  - create_cotable
 - title: "Results"
   desc: "Functions for creating analysis outputs"
   contents:

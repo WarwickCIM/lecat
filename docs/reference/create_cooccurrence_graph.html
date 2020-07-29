@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a graph representation of the cooccurences of Types, Categories or Queries — create_cooccurrence_graph • lecat</title>
+<title>Create a graph representation of the cooccurences of Categories — create_cooccurrence_graph • lecat</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Create a graph representation of the cooccurences of Types, Categories or Queries — create_cooccurrence_graph" />
-<meta property="og:description" content="Calculates the cooccurrence of either Types, Categories or Queries.
+<meta property="og:title" content="Create a graph representation of the cooccurences of Categories — create_cooccurrence_graph" />
+<meta property="og:description" content="Calculates the cooccurrence of Categories.
 A graph object is then created using the make_graph function for
 visualising in Gephi or similiar software." />
 
@@ -74,7 +74,7 @@ visualising in Gephi or similiar software." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lecat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9</span>
       </span>
     </div>
 
@@ -88,21 +88,6 @@ visualising in Gephi or similiar software." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/Console.html">Console</a>
-    </li>
-    <li>
-      <a href="../articles/Web App.html">Web app</a>
-    </li>
-  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -123,22 +108,21 @@ visualising in Gephi or similiar software." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a graph representation of the cooccurences of Types, Categories or Queries</h1>
+    <h1>Create a graph representation of the cooccurences of Categories</h1>
     
     <div class="hidden name"><code>create_cooccurrence_graph.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculates the cooccurrence of either Types, Categories or Queries.
+    <p>Calculates the cooccurrence of Categories.
 A graph object is then created using the <a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>make_graph</a> function for
 visualising in Gephi or similiar software.</p>
     </div>
 
     <pre class="usage"><span class='fu'>create_cooccurrence_graph</span>(
-  <span class='no'>lecat_result</span>,
+  <span class='no'>result</span>,
   <span class='kw'>graph_filename</span> <span class='kw'>=</span> <span class='st'>"result.graphml"</span>,
   <span class='kw'>cotable_filename</span> <span class='kw'>=</span> <span class='st'>"cotable.csv"</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='st'>"Query"</span>,
   <span class='kw'>inShiny</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
@@ -146,7 +130,7 @@ visualising in Gephi or similiar software.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>lecat_result</th>
+      <th>result</th>
       <td><p>result from the <a href='run_lecat_analysis.html'>run_lecat_analysis</a> function</p></td>
     </tr>
     <tr>
@@ -156,10 +140,6 @@ visualising in Gephi or similiar software.</p>
     <tr>
       <th>cotable_filename</th>
       <td><p>filename of the generated cooccurrence table</p></td>
-    </tr>
-    <tr>
-      <th>level</th>
-      <td><p>Level of cooccurence. Either 'Query', 'Category' or 'Type'</p></td>
     </tr>
     <tr>
       <th>inShiny</th>

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lecat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9</span>
       </span>
     </div>
 
@@ -57,7 +57,7 @@
       <a href="../articles/Console.html">Console</a>
     </li>
     <li>
-      <a href="../articles/Web%20App.html">Web app</a>
+      <a href="../articles/WebApp.html">Web app</a>
     </li>
   </ul>
 </li>
@@ -75,7 +75,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="Console_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Console</h1>
@@ -102,9 +102,8 @@
 <h2 class="hasAnchor">
 <a href="#example-data" class="anchor"></a>Example data</h2>
 <p>The shiny app allows you to download an example lexicon, corpus and lookup table</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">lecat</span>)</pre></body></html></div>
-<pre><code>## Loading required package: lecat</code></pre>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">example_lexicon</span> <span class="kw">&lt;-</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tribble</a></span>(
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">lecat</span>)
+<span class="no">example_lexicon</span> <span class="kw">&lt;-</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tribble</a></span>(
   ~<span class="no">Type</span>,          ~<span class="no">Category</span>,     ~<span class="no">Query</span>,           ~<span class="no">Query1</span>,        ~<span class="no">Query2</span>,
   <span class="st">'technology'</span>,   <span class="st">'Apple'</span>,       <span class="st">'iphone'</span>,         <span class="st">'iPad'</span>,         <span class="st">'imac'</span>,
   <span class="st">'influencers'</span>,  <span class="st">'CIM'</span>,         <span class="st">'Noortje Marres'</span>, <span class="st">'James Tripp'</span>,  <span class="st">''</span>
@@ -201,21 +200,15 @@
 <h2 class="hasAnchor">
 <a href="#parse-lexicon" class="anchor"></a>Parse lexicon</h2>
 <p>A wide format lexicon (as shown in the example data) is structure I find easier to teach with. This wide format needs to be changed to a long format (wish one query per row) using the parse_lexicon function.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">lexicon</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/parse_lexicon.html">parse_lexicon</a></span>(<span class="no">example_lexicon</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">lexicon</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/parse_lexicon.html">parse_lexicon</a></span>(<span class="no">example_lexicon</span>)
 <span class="no">lexicon</span></pre></body></html></div>
-<pre><code>##          Type Category        Queries
-## 1  technology    Apple         iphone
-## 2  technology    Apple           iPad
-## 3  technology    Apple           imac
-## 4 influencers      CIM Noortje Marres
-## 5 influencers      CIM    James Tripp</code></pre>
 </div>
 <div id="query-searching" class="section level2">
 <h2 class="hasAnchor">
 <a href="#query-searching" class="anchor"></a>Query searching</h2>
 <p>LE-CAT searches for terms in the corpus text. You may wish to specify a different search column for each Type. The search column for each type is specified in the lookup table.</p>
 <p>To carry out your search of the corpus, pass the long form lexicon, the search data frame and corpus to the run_lecat_analysis function.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">lecat_result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/run_lecat_analysis.html">run_lecat_analysis</a></span>(<span class="kw">lexicon</span> <span class="kw">=</span> <span class="no">lexicon</span>,
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">lecat_result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/run_lecat_analysis.html">run_lecat_analysis</a></span>(<span class="kw">lexicon</span> <span class="kw">=</span> <span class="no">lexicon</span>,
                                    <span class="kw">corpus</span> <span class="kw">=</span> <span class="no">example_corpus</span>,
                                    <span class="kw">searches</span> <span class="kw">=</span> <span class="no">example_lookup_table</span>,
                                    <span class="kw">regex_expression</span> <span class="kw">=</span> <span class="st">'\\Wquery\\W'</span>)</pre></body></html></div>
@@ -285,7 +278,7 @@
 <h2 class="hasAnchor">
 <a href="#diagnostics" class="anchor"></a>Diagnostics</h2>
 <p>The LE-CAT raw count data shown above may be hard for one to process. The above can be summarised into a diagnostic file using the create_unique_total_diagnostics function</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">diagnostics</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/create_unique_total_diagnostics.html">create_unique_total_diagnostics</a></span>(<span class="no">lecat_result</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">diagnostics</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/create_unique_total_diagnostics.html">create_unique_total_diagnostics</a></span>(<span class="no">lecat_result</span>)</pre></body></html></div>
 <p>to create a table like so</p>
 <table class="table">
 <thead><tr class="header">
@@ -315,20 +308,18 @@
 <h2 class="hasAnchor">
 <a href="#cooccurance" class="anchor"></a>Cooccurance</h2>
 <p>You may calculate the cooccurance of queries (irrespective of the corresponding Type and Category) using the create_cooccurrence_graph function</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">cooccurrence</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="../reference/create_cooccurrence_graph.html">create_cooccurrence_graph</a></span>(<span class="kw">lecat_result</span> <span class="kw">=</span> <span class="no">lecat_result</span>,
-                            <span class="kw">level</span> <span class="kw">=</span> <span class="st">'Query'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">cooccurrence</span> <span class="kw">&lt;-</span>
+  <span class="fu"><a href="../reference/create_cooccurrence_graph.html">create_cooccurrence_graph</a></span>(<span class="kw">lecat_result</span> <span class="kw">=</span> <span class="no">lecat_result</span>)</pre></body></html></div>
 <p><strong>Note</strong> Creating the cooccurence graph can take a lot of time depending on the size of corpus and lexicon.</p>
 <p>You can calculate cooccurance based on the categories by changing the level argument to ‘Category’.</p>
 <p>By default the files ‘result.graphml’ and ‘cotable.csv’ are created in the working directory.</p>
 <p>The result.grapml file contains a network of the cooccurences. The Type, Category and Column_examined are attributes of the nodes and the weight of the edges are the cooccurance of the queries. You may view graphml network graphs using the excellent <a href="https://gephi.org">Gephi</a> program. <strong>Note</strong> if you have duplicate edges (where there are edges between node1-node2 and node2-node1 then select merge first withing Gephi).</p>
 <p>The cotable.csv file is a table of the cooccurences. This file can be loaded into programs such as Excel, LibreOffice or R.</p>
 <p>The create_cooccurrence_graph function returns a list containing the cooccurence table as a data frame and the cooccurence network as an igraph network. The igraph object may be useful as the igraph package contains many functions for calculating statistics on the generated netowrk. You may also plot the object in R using the following command:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">igraph</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">cooccurrence</span>$<span class="no">graph</span>)</pre></body></html></div>
-<p><img src="Console_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">igraph</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cooccurrence</span>$<span class="no">graph</span>)</pre></body></html></div>
 <p>and view the cooccurance table like so</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">cooccurrence</span>$<span class="no">cotable</span></pre></body></html></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">cooccurrence</span>$<span class="no">cotable</span></pre></body></html></div>
 </div>
   </div>
 
