@@ -31,7 +31,9 @@ Imports:
     writexl,
     dplyr,
     tidyr
-Suggests: 
+Suggests:
+    knitr,
+    rmarkdown,
     covr,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
