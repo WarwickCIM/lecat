@@ -1,16 +1,17 @@
 Package: lecat
 Type: Package
 Title: Lexicon-based Categorization and Analysis Tool
-Version: 1.9
+Version: 1.9.1
 Authors@R: c(
     person("James", "Tripp", , "james.tripp@warwick.ac.uk", role = c("aut", "cre"))
     )
-Maintainer: James Tripp <james.tripp@warwick.ac.uk>
 Description: LE-CAT is a Lexicon-based Categorization and Analysis Tool developed 
     by the Centre for Interdisciplinary Methodologies in collaboration with the Media
     of Cooperation Group at the University of Siegen. More information can be found at
     https://www.warwick.ac.uk/cim/tools/ .
-License: GPL-3
+License: MIT + file LICENSE
+URL: https://github.com/warwickCIM/lecat
+BugReports: https://github.com/warwickCIM/lecat/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
