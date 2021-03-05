@@ -2,7 +2,9 @@ Package: lecat
 Type: Package
 Title: Lexicon-based Categorization and Analysis Tool
 Version: 1.9
-Author: James Tripp
+Authors@R: c(
+    person("James", "Tripp", , "james.tripp@warwick.ac.uk", role = c("aut", "cre"))
+    )
 Maintainer: James Tripp <james.tripp@warwick.ac.uk>
 Description: LE-CAT is a Lexicon-based Categorization and Analysis Tool developed 
     by the Centre for Interdisciplinary Methodologies in collaboration with the Media
@@ -29,4 +31,7 @@ Imports:
     dplyr,
     tidyr
 Suggests: 
-    testthat
+    covr,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
