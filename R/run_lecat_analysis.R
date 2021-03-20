@@ -11,7 +11,7 @@
 #' @param case_sensitive If case_sensitive is TRUE then the search will be case sensitive
 #'
 #' @return run_lecat_analysis returns a data frame containing the lexicon, the corresponding search column for the query type and the frequency of terms by corpus id
-run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expression = '\\Wquery\\W', inShiny = FALSE, case_sensitive = FALSE){
+run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expression = '\\bquery\\b', inShiny = FALSE, case_sensitive = FALSE){
 
   # convert everything to lower case if not case sensitive
   if(!case_sensitive) {

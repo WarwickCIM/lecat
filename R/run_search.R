@@ -11,7 +11,7 @@
 #' @param column String column name examined included in the returned dataframe
 #'
 #' @return dataframe with counts of the query in each string
-run_search <- function(strings, query, regex = "\\Wquery\\W", type, category, ids, column){
+run_search <- function(strings, query, regex = "\\bquery\\b", type, category, ids, column){
 
   # correctly add backslash to any special character for regex search
   query <- stringr::str_replace_all(query, "([{\\[()|?$^*+.\\\\])", "\\$1")

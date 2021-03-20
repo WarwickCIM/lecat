@@ -9,7 +9,7 @@ run_lecat_analysis(
   corpus,
   searches,
   id = NaN,
-  regex_expression = "\\\\Wquery\\\\W",
+  regex_expression = "\\\\bquery\\\\b",
   inShiny = FALSE,
   case_sensitive = FALSE
 )

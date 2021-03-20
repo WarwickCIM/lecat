@@ -45,7 +45,7 @@ fluidPage(
          textInput(
            inputId = 'lecat_analysis_regex',
            label = 'Regex',
-           value = '\\W?query\\W?'
+           value = '\\b?query\\b?'
          ),
 
          # Checkbox input for case sensitivity ----

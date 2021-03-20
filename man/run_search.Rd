@@ -7,7 +7,7 @@
 run_search(
   strings,
   query,
-  regex = "\\\\Wquery\\\\W",
+  regex = "\\\\bquery\\\\b",
   type,
   category,
   ids,
