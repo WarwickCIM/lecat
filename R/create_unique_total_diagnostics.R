@@ -1,13 +1,13 @@
 #' Generates diagnostics about the unique and total occurences of Types, Categories and Queries
 #'
-#' Creates a file listing the total occurances of all queries and categories.
+#' Creates a file listing the total occurrences of all queries and categories.
 #'
 #' @param lecat_result data frame output from the \link[lecat]{run_lecat_analysis} function
 #' @param inShiny If inShiny is TRUE then shiny based notifications will be shown
 #'
 #' @return Passing the output of the \link[lecat]{run_lecat_analysis} function will return a data frame with Type,
-#' Category, Queries and Column_examined columns. In the output the unique and total occurances of Types, Category and Query
-#' are reported in the format Term(total occurances, unique occurances).
+#' Category, Queries and Column_examined columns. In the output the unique and total occurrences of Types, Category and Query
+#' are reported in the format Term(total occurrences, unique occurrences).
 create_unique_total_diagnostics <- function(lecat_result, inShiny = FALSE){
 
   # TODO: keep counts as a matrix for efficiency reasons

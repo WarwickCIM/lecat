@@ -7,8 +7,8 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![codecov](https://codecov.io/gh/WarwickCIM/lecat/branch/master/graph/badge.svg?token=RtMnQjfEcZ)](https://codecov.io/gh/WarwickCIM/lecat)
-[![R-CMD-check](https://github.com/WarwickCIM/lecat/workflows/R-CMD-check/badge.svg)](https://github.com/WarwickCIM/lecat/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build
+Status](https://travis-ci.org/warwickCIM/lecat.svg?branch=master)](https://travis-ci.org/WarwickCIM/lecat)
 [![DOI](https://zenodo.org/badge/161813229.svg)](https://zenodo.org/badge/latestdoi/161813229)
 
 LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by

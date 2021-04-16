@@ -7,11 +7,13 @@
 run_search(
   strings,
   query,
-  regex = "\\\\bquery\\\\b",
+  regex = "(?<=\\\\W|^)query(?=\\\\W|$)",
   type,
   category,
   ids,
-  column
+  column,
+  case_sensitive,
+  advanced_mode
 )
 }
 \arguments{
@@ -19,7 +21,7 @@ run_search(
 
 \item{query}{String query term to search for in the strings. Taken from the chosen lexicon.}
 
-\item{regex}{String regular expression defining the strings should be searched. Defaults to searching for the query term with non word characters either side}
+\item{regex}{String regular expression defining the search pattern. Defaults to searching for the query term with non word characters either side or at the beginning or end of string. Look behind and look ahead impede characters outside the query term to be matched (correctly finds emoji or any other non-word query terms)}
 
 \item{type}{String query type. Derived from lexicon type.}
 
@@ -28,6 +30,10 @@ run_search(
 \item{ids}{id of the string}
 
 \item{column}{String column name examined included in the returned dataframe}
+
+\item{case_sensitive}{If case_sensitive is TRUE then the search will be case sensitive}
+
+\item{advanced_mode}{If advanced_mode is TRUE then the search will not apply a regex, instead it will assume all query terms are well-formed regex patterns (this covers query terms with no regex pattern at all).}
 }
 \value{
 dataframe with counts of the query in each string

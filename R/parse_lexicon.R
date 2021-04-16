@@ -27,6 +27,8 @@ parse_lexicon <- function(wide_lexicon, type_column = 'Type', category_column = 
     # remove na and empty queries
     these_queries <- these_queries[!is.na(these_queries)]
     these_queries <- these_queries[these_queries != '']
+    
+    # stop parsing if advanced mode is on and one of the queries is not a valid regex
 
     # add a new data frame to existing long_lexicon.
     # new dataframe has the structure
