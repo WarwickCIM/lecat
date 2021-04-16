@@ -28,7 +28,9 @@ parse_lexicon <- function(wide_lexicon, type_column = 'Type', category_column = 
     these_queries <- these_queries[!is.na(these_queries)]
     these_queries <- these_queries[these_queries != '']
     
-    # stop parsing if advanced mode is on and one of the queries is not a valid regex
+    # stop parsing if advanced mode is on and one or more queries is not a valid regex
+    # this could be an improvement, but would require advanced mode on/off be selected before loading lexicon
+    # so regex validity check could be added at this point
 
     # add a new data frame to existing long_lexicon.
     # new dataframe has the structure
