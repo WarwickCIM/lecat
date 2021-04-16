@@ -142,6 +142,7 @@ function(input, output, session) {
       x  <-
         readxl::read_excel(input$lecat_lexicon_file$datapath)
 
+      shiny::showNotification('Loading lexicon: reading excel file', type = 'message')
       # Make sure there's at least one query
       at_least_one_query <-
         sum(grepl(
@@ -153,16 +154,24 @@ function(input, output, session) {
       # parse the lexicon if there are columns called Type, Category and at least one query
       if (('Type' %in% names(x)) &
           ('Category' %in% names(x)) & at_least_one_query) {
-        data$lecat_lexicon <- parse_lexicon(x)
-        data$lexicon_loaded <- TRUE
-
+        tryCatch({
+          data$lecat_lexicon <- parse_lexicon(x)
+          data$lexicon_loaded <- TRUE
+          shiny::showNotification('Loading lexicon: Parsed to long format', type = 'message')
+        },
+        error = function(e) {
+          # return an error if parsing fails
+          shiny::showNotification('Lexicon not loaded: Parsing error, check all categories in the lexicon have at least one query term', type = 'error')
+        })
       } else {
         if (!at_least_one_query) {
           shiny::showNotification('Lexicon not loaded: Two or more queries required',
                                   type = 'error')
         } else {
-          shiny::showNotification('Lexicon not loaded: Column names Type, Category and Query required.',
-                                  type = 'error')
+          shiny::showNotification(
+            'Lexicon not loaded: Column names "Type", "Category" and "Query" required.',
+            type = 'error'
+          )
         }
       }
     },
@@ -188,7 +197,7 @@ function(input, output, session) {
     error = function(e) {
       # return a safeError if a parsing error occurs
       #stop(safeError(e))
-      shiny::showNotification('Lexicon not loaded: error', type = 'error')
+      shiny::showNotification('Corpus not loaded: error', type = 'error')
       #safeError(e)
     })
   })
@@ -214,7 +223,7 @@ function(input, output, session) {
           # count and remove incomplete cases
           n_incomplete_cases <- sum(!complete.cases(lookup_table))
           lookup_table <-
-            lookup_table[complete.cases(lookup_table),]
+            lookup_table[complete.cases(lookup_table), ]
 
           # notify the user of incomplete cases
           shiny::showNotification(paste(
@@ -255,7 +264,7 @@ function(input, output, session) {
 
     # Check if the lexicon and lookup types are the same
     if (mean(lookup_table_types %in% lexicon_types) == 1) {
-      shiny::showNotification('Running lecat analysis')
+      shiny::showNotification('Running LE-CAT analysis')
 
       tryCatch({
         # Run the analysis
@@ -274,7 +283,7 @@ function(input, output, session) {
         data$lecat_raw_result <- x
 
         # Notify user
-        shiny::showNotification('Generating diagnostics. Please wait.')
+        shiny::showNotification('Generating diagnostics. Please wait...')
 
         # Create diagnostic summary and assign into reactive value
         data$lecat_diagnostics <-
@@ -288,7 +297,7 @@ function(input, output, session) {
       error = function(e) {
         # return a safeError if a searching error occurs
         shiny::showNotification(
-          'Analysis not completed. If using Advanced Regex Mode, please check your query terms: error',
+          'Analysis not completed: Check your lexicon query terms. If using Advanced Regex Mode,  check all query terms are well-formed regex patterns',
           type = 'error'
         )
       })
