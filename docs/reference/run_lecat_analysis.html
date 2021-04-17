@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lecat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.2</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/warwickCIM/grapho/">
+  <a href="https://github.com/warwickCIM/lecat/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -112,7 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Searches for queries in a corpus using a specific regular expression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/warwickCIM/grapho/blob/master/R/run_lecat_analysis.R'><code>R/run_lecat_analysis.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/warwickCIM/lecat/blob/master/R/run_lecat_analysis.R'><code>R/run_lecat_analysis.R</code></a></small>
     <div class="hidden name"><code>run_lecat_analysis.Rd</code></div>
     </div>
 
@@ -125,9 +125,10 @@
   <span class='va'>corpus</span>,
   <span class='va'>searches</span>,
   id <span class='op'>=</span> <span class='cn'>NaN</span>,
-  regex_expression <span class='op'>=</span> <span class='st'>"(?<=\\W|^)query(?=\\W|$)"</span>,
+  regex_expression <span class='op'>=</span> <span class='st'>"(?&lt;=\\W|^)query(?=\\W|$)"</span>,
   inShiny <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  case_sensitive <span class='op'>=</span> <span class='cn'>FALSE</span>
+  case_sensitive <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  advanced_mode <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -151,7 +152,7 @@
     </tr>
     <tr>
       <th>regex_expression</th>
-      <td><p>Regex expression defining search. String defining a global search pattern, where the string 'query' will be replaced for the lexicon query term. Defaults to searching for the query term with non word characters either side or at the beginning or end of string. Look behind and look ahead impede characters outside the query term to be matched (correctly finds emoji or any other non-word query terms</p></td>
+      <td><p>String regular expression defining search pattern. Defaults to searching for the query term with non word characters either side or at the beginning or end of string. Look behind and look ahead impede characters outside the query term to be matched (correctly finds emoji or any other non-word query terms)</p></td>
     </tr>
     <tr>
       <th>inShiny</th>
@@ -163,7 +164,7 @@
     </tr>
     <tr>
       <th>advanced_mode</th>
-      <td><p>If advanced_mode is TRUE then the search will not apply the global query pattern and instead assume each lexicon query term is a well-formed regex (this encompasses query terms with no regex pattern at all)</p></td>
+      <td><p>If advanced_mode is TRUE then the search will not apply a regex, instead it will assume all query terms are well-formed regex patterns (this covers query terms with no regex pattern at all).</p></td>
     </tr>
     </table>
 

@@ -3,6 +3,14 @@ title: "NEWS"
 output: github_document
 ---
 
+lecat v1.92 (Release date: 2021-04-17)
+==============
+
+Changes:
+
+* Added advanced search which allows the specification of custom regex searches.
+
+
 lecat v1.90 (Release date: 2020-07-26)
 ==============
 

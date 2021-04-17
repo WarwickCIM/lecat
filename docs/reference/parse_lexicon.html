@@ -43,8 +43,8 @@
 <meta property="og:description" content="Takes a wide format lexicon and creates a long form lexicon file.
 The long form lexicon can then be passed to the LE-CAT search function.
 Wide format lexicons should have the columns for type and category,
-query terms should start at the query column and continue along the row.
-Each category should have one row per category." />
+Query terms should start at the query column and continue along the row.
+Each category should have one row per category and _at least_ one query term." />
 
 
 
@@ -76,7 +76,7 @@ Each category should have one row per category." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lecat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.2</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@ Each category should have one row per category." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/warwickCIM/grapho/">
+  <a href="https://github.com/warwickCIM/lecat/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -116,7 +116,7 @@ Each category should have one row per category." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Converts a wide format lexicon file to a long format</h1>
-    <small class="dont-index">Source: <a href='https://github.com/warwickCIM/grapho/blob/master/R/parse_lexicon.R'><code>R/parse_lexicon.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/warwickCIM/lecat/blob/master/R/parse_lexicon.R'><code>R/parse_lexicon.R</code></a></small>
     <div class="hidden name"><code>parse_lexicon.Rd</code></div>
     </div>
 
@@ -124,8 +124,8 @@ Each category should have one row per category." />
     <p>Takes a wide format lexicon and creates a long form lexicon file.
 The long form lexicon can then be passed to the LE-CAT search function.
 Wide format lexicons should have the columns for type and category,
-query terms should start at the query column and continue along the row.
-Each category should have one row per category.</p>
+Query terms should start at the query column and continue along the row.
+Each category should have one row per category and _at least_ one query term.</p>
     </div>
 
     <pre class="usage"><span class='fu'>parse_lexicon</span><span class='op'>(</span>
@@ -140,15 +140,15 @@ Each category should have one row per category.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>wide_lexicon</th>
-      <td><p>Data frame with one row per category containing type, category and the corresponding queries</p></td>
+      <td><p>Data frame with one row per category containing type, category and the corresponding query terms.</p></td>
     </tr>
     <tr>
       <th>type_column</th>
-      <td><p>Column name in the wide_lexicon which contains the category type</p></td>
+      <td><p>Column name in the wide_lexicon which contains the category type.</p></td>
     </tr>
     <tr>
       <th>category_column</th>
-      <td><p>Column name in the wide_lexicon which contains the category of interest</p></td>
+      <td><p>Column name in the wide_lexicon which contains the category of interest.</p></td>
     </tr>
     <tr>
       <th>query_column</th>
