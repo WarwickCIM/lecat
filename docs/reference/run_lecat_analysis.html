@@ -125,7 +125,7 @@
   <span class='va'>corpus</span>,
   <span class='va'>searches</span>,
   id <span class='op'>=</span> <span class='cn'>NaN</span>,
-  regex_expression <span class='op'>=</span> <span class='st'>"\\bquery\\b"</span>,
+  regex_expression <span class='op'>=</span> <span class='st'>"(?<=\\W|^)query(?=\\W|$)"</span>,
   inShiny <span class='op'>=</span> <span class='cn'>FALSE</span>,
   case_sensitive <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
@@ -151,7 +151,7 @@
     </tr>
     <tr>
       <th>regex_expression</th>
-      <td><p>Regex expression defining search. String defining the regex expression where the string 'query' will be replaced by the actual query term</p></td>
+      <td><p>Regex expression defining search. String defining a global search pattern, where the string 'query' will be replaced for the lexicon query term. Defaults to searching for the query term with non word characters either side or at the beginning or end of string. Look behind and look ahead impede characters outside the query term to be matched (correctly finds emoji or any other non-word query terms</p></td>
     </tr>
     <tr>
       <th>inShiny</th>
@@ -160,6 +160,10 @@
     <tr>
       <th>case_sensitive</th>
       <td><p>If case_sensitive is TRUE then the search will be case sensitive</p></td>
+    </tr>
+    <tr>
+      <th>advanced_mode</th>
+      <td><p>If advanced_mode is TRUE then the search will not apply the global query pattern and instead assume each lexicon query term is a well-formed regex (this encompasses query terms with no regex pattern at all)</p></td>
     </tr>
     </table>
 

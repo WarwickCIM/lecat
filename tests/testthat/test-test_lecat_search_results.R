@@ -35,7 +35,7 @@ test_that("LE-CAT analysis works", {
     Column_examined = c('stimuli','stimuli','stimuli','stimuli','stimuli','stimuli'),
     V1 = c(0,0,0,0,2,0),
     V2 = c(1,1,0,0,1,0),
-    V3 = c(0,1,0,0,1,1),
+    V3 = c(0,1,0,0,1,0),
     V4 = c(0,0,1,0,0,1)
   )
 

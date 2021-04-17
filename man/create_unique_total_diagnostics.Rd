@@ -13,9 +13,9 @@ create_unique_total_diagnostics(lecat_result, inShiny = FALSE)
 }
 \value{
 Passing the output of the \link[lecat]{run_lecat_analysis} function will return a data frame with Type,
-Category, Queries and Column_examined columns. In the output the unique and total occurances of Types, Category and Query
-are reported in the format Term(total occurances, unique occurances).
+Category, Queries and Column_examined columns. In the output the unique and total occurrences of Types, Category and Query
+are reported in the format Term(total occurrences, unique occurrences).
 }
 \description{
-Creates a file listing the total occurances of all queries and categories.
+Creates a file listing the total occurrences of all queries and categories.
 }

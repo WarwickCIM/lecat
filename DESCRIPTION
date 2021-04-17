@@ -1,6 +1,6 @@
 Package: lecat
 Type: Package
-Title: Lexicon-based Categorization and Analysis Tool
+Title: Lexicon-based Categorization and Analysis Tool (with Advanced Mode)
 Version: 1.9.1
 Authors@R: c(
     person("James", "Tripp", , "james.tripp@warwick.ac.uk", role = c("aut", "cre"))
