@@ -1,7 +1,7 @@
 # Define UI for LE-CAT app ----
 fluidPage(
   # App title ----
-  titlePanel("LE-CAT (Helena's modified version)"),
+  titlePanel("LE-CAT"),
 
   # Sidebar layout with a input and output definitions ----
   sidebarLayout(
@@ -118,7 +118,7 @@ fluidPage(
           'About',
 
           br(),
-          h5('V1.9. Under GPL3.0 License.'),
+          h5('V1.9.2. Under GPL3.0 License.'),
           p(
             'LE-CAT is a Lexicon-based Categorization and Analysis Tool developed by the Centre
                               for Interdisciplinary Methodologies in collaboration with the',
