@@ -13,35 +13,34 @@ fluidPage(
         "Choose example file:",
         choices = c("Lexicon", "Corpus", "Lookup_Table")
       ),
-
       # Download button for examples files ----
       downloadButton("download_lecat_example", "Download"),
 
       hr(),
-      tags$h5('Input'),
+      tags$h5('Input files (xls, xlsx, csv format)'),
 
-      # File input for lexicon excel file ----
+      # File input for lexicon file ----
       fileInput(
         "lecat_lexicon_file",
-        "Choose Lexicon File (xlsx format)",
+        "Upload Lexicon File",
         multiple = FALSE,
-        accept = ".xlsx"
+        accept = c(".xlsx", ".xls", ".csv")
       ),
 
-      # File input for corpus excel file ----
+      # File input for corpus file ----
       fileInput(
         "lecat_corpus_file",
-        "Choose Corpus File (xlsx format)",
+        "Upload Corpus File",
         multiple = FALSE,
-        accept = ".xlsx"
+        accept = c(".xlsx", ".xls", ".csv")
       ),
 
-      # File input for lookup table excel file ----
+      # File input for lookup table file ----
       fileInput(
         "lecat_lookup_table_file",
-        "Choose Lookup Table File (xlsx format)",
+        "Upload Lookup Table File",
         multiple = FALSE,
-        accept = ".xlsx"
+        accept = c(".xlsx", ".xls", ".csv")
       ),
 
       # Conditional panel displayed when lecat is ready ----
@@ -158,7 +157,7 @@ fluidPage(
 
           br(),
           p(
-            'LE-CAT requires three files to work. All of these should be Excel (.xlsx) files.'
+            'LE-CAT requires three files to work. All of these should be Excel (.xlsx, .xls) or Comma Separated Values (.csv) files.'
           ),
           tags$ul(
             tags$li(
@@ -174,7 +173,7 @@ fluidPage(
           strong('Walkthrough'),
           tags$ol(
             tags$li(
-              'Download the example Lexicon, Corpus and Lookup Table. Modify these files to suite your needs.'
+              'Download the example Lexicon, Corpus and Lookup Table. Modify these files to suit your needs.'
             ),
             tags$li(
               'Upload the modified files to LE-CAT by clicking Browse and choosing the file. The Analysis section will appear once all three files are uploaded.'
@@ -186,10 +185,10 @@ fluidPage(
               'Search the corpus for your queries by clicking on "Run LE-CAT Analysis". The LE-CAT diagnostics will be shown in the Data tab once the analysis is complete.'
             ),
             tags$li(
-              'LE-CAT offers co-occurence analysis. You can investigate how often queries, types or categories co-occur. Select your desired level of co-occurrence then click "Calculate co-occurence". A co-occurence table and network file are now available to download.'
+              'LE-CAT offers co-occurrence analysis. You can investigate how often categories co-occur (calculation of co-occurrence of query terms is in development). Select your desired level of co-occurrence then click "Calculate co-occurrence". A co-occurrence table and network file are now available to download.'
             ),
             tags$li(
-              'All the output files are available to download. Click on the drop down menu to select a file and then press Download.'
+              'All the output files are available to download. Click on the drop down menu to select a file and then press Download. (NB. Cotable and Network files will NOT be available if you do not complete the step above)'
             )
           )
         ),

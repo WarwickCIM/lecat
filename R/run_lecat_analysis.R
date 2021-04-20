@@ -12,16 +12,23 @@
 #' @param advanced_mode If advanced_mode is TRUE then the search will not apply a regex, instead it will assume all query terms are well-formed regex patterns (this covers query terms with no regex pattern at all).
 #'
 #' @return run_lecat_analysis returns a data frame containing the lexicon, the corresponding search column for the query type and the frequency of terms by corpus id
-run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expression = '(?<=\\W|^)query(?=\\W|$)', inShiny = FALSE, case_sensitive = FALSE, advanced_mode = FALSE){
-
-  # DONT MAKE EVERYTHING LOWER CASE! USE REGEX CASE SENSITIVE MODIFIER INSTEAD (IN RUN_SEARCH FUNCTION)...
-  # convert everything to lower case if not case sensitive
-  #  if(!case_sensitive) {
+run_lecat_analysis <-
+  function(lexicon,
+           corpus,
+           searches,
+           id = NaN,
+           regex_expression = '(?<=\\W|^)query(?=\\W|$)',
+           inShiny = FALSE,
+           case_sensitive = FALSE,
+           advanced_mode = FALSE) {
+    # DONT MAKE EVERYTHING LOWER CASE! USE REGEX CASE SENSITIVE MODIFIER INSTEAD (IN RUN_SEARCH FUNCTION)...
+    # convert everything to lower case if not case sensitive
+    #  if(!case_sensitive) {
     #    lexicon$Queries <- stringr::str_to_lower(lexicon$Queries)
 
     # turn tibble all lower case
     #    corpus <- corpus %>%
-      #      dplyr::mutate_all(.funs = stringr::str_to_lower)
+    #      dplyr::mutate_all(.funs = stringr::str_to_lower)
 
     # set each column in the corpus to lower case
     #for (col_name in names(corpus)) {
@@ -29,70 +36,81 @@ run_lecat_analysis <- function(lexicon, corpus, searches, id = NaN, regex_expres
     #}
     #  }
 
-  # Create custom ID
-  message('Creating ID column')
-  corpus$auto_id_column <- as.character(1:nrow(corpus))
-  id <- 'auto_id_column'
+    # Create custom ID
+    message('Creating ID column')
+    corpus$auto_id_column <- as.character(1:nrow(corpus))
+    id <- 'auto_id_column'
 
-   out <- NULL
+    out <- NULL
 
-   # output dataframe
-   result <-
-     data.frame(
-       Type = rep(NaN, nrow(lexicon)),
-       Category = rep(NaN, nrow(lexicon)),
-       Query = rep(NaN, nrow(lexicon)),
-       Column_examined = rep(NaN, nrow(lexicon)),
-       stringsAsFactors = FALSE
-     )
+    # output dataframe
+    result <-
+      data.frame(
+        Type = rep(NaN, nrow(lexicon)),
+        Category = rep(NaN, nrow(lexicon)),
+        Query = rep(NaN, nrow(lexicon)),
+        Column_examined = rep(NaN, nrow(lexicon)),
+        stringsAsFactors = FALSE
+      )
 
-   counts_df <-
-     as.data.frame(matrix(
-       data = rep(NaN, nrow(lexicon) * nrow(corpus)),
-       nrow = nrow(lexicon),
-       ncol = nrow(corpus)
-     ))
+    counts_df <-
+      as.data.frame(matrix(
+        data = rep(NaN, nrow(lexicon) * nrow(corpus)),
+        nrow = nrow(lexicon),
+        ncol = nrow(corpus)
+      ))
 
-   result <- cbind(result, counts_df, stringsAsFactors = FALSE)
+    result <- cbind(result, counts_df, stringsAsFactors = FALSE)
 
-   if (inShiny) {
-     n <- nrow(lexicon)
-     shiny::withProgress(message = 'Searching corpus', value = 0, {
-       for (i in 1:nrow(lexicon)) {
-         shiny::incProgress(1/n, detail = paste("query", i))
-         this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
-         #out <- rbind(out,
-         shiny::showNotification(paste('Query:', lexicon$Queries[i]))
-          result[i,] <- run_search(corpus[,this_search_column],
-                                 lexicon$Queries[i],
-                                 regex_expression, lexicon$Type[i],
-                                 lexicon$Category[i],
-                                 corpus[,id],
-                                 this_search_column,
-                                 case_sensitive,
-                                 advanced_mode)
-         #)
-       }
-     })
-   } else {
-     pb <- utils::txtProgressBar(min = 1, max = nrow(lexicon), initial = 1)
-     for (i in 1:nrow(lexicon)) {
-       utils::setTxtProgressBar(pb, i)
-       this_search_column <- searches$Column[lexicon$Type[i] == searches$Type]
-       #out <- rbind(out,
-       result[i,] <- run_search(strings = corpus[,this_search_column],
-                                query = lexicon$Queries[i],
-                                regex = regex_expression,
-                                type = lexicon$Type[i],
-                                category = lexicon$Category[i],
-                                ids = corpus[,id],
-                                column = this_search_column,
-                                case_sensitive,
-                                advanced_mode)
-       #)
-     }
-     close(pb)
-   }
+    if (inShiny) {
+      n <- nrow(lexicon)
+      shiny::withProgress(message = 'Searching corpus', value = 0, {
+        for (i in 1:nrow(lexicon)) {
+          shiny::incProgress(1 / n, detail = paste("query", i))
+          this_search_column <-
+            searches$Column[lexicon$Type[i] == searches$Type]
+          #out <- rbind(out,
+          shiny::showNotification(paste('Query:', lexicon$Queries[i]))
+          result[i, ] <- run_search(
+            corpus[, this_search_column],
+            lexicon$Queries[i],
+            regex_expression,
+            lexicon$Type[i],
+            lexicon$Category[i],
+            corpus[, id],
+            this_search_column,
+            case_sensitive,
+            advanced_mode
+          )
+          #)
+        }
+      })
+    } else {
+      pb <-
+        utils::txtProgressBar(min = 1,
+                              max = nrow(lexicon),
+                              initial = 1)
+      for (i in 1:nrow(lexicon)) {
+        utils::setTxtProgressBar(pb, i)
+        this_search_column <-
+          searches$Column[lexicon$Type[i] == searches$Type]
+        #out <- rbind(out,
+        result[i, ] <-
+          run_search(
+            strings = corpus[, this_search_column],
+            query = lexicon$Queries[i],
+            regex = regex_expression,
+            type = lexicon$Type[i],
+            category = lexicon$Category[i],
+            ids = corpus[, id],
+            column = this_search_column,
+            case_sensitive,
+            advanced_mode
+          )
+        #)
+      }
+      close(pb)
+    }
 
-   result
-}
+    result
+  }
