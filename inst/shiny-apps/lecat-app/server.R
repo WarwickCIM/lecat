@@ -138,11 +138,23 @@ function(input, output, session) {
 
     # try to load the lexicon file and parse it
     tryCatch({
-      # read excel file
-      x  <-
-        readxl::read_excel(input$lecat_lexicon_file$datapath)
-
-      shiny::showNotification('Loading lexicon: reading excel file', type = 'message')
+      # read file
+      if (input$lecat_lexicon_file$type == "text/csv") {
+        x <-
+          read.csv(
+            input$lecat_lexicon_file$datapath,
+            stringsAsFactors = FALSE,
+            header = TRUE,
+            sep = ",",
+            quote = "\"",
+            fileEncoding = "UTF-8",
+            skipNul = TRUE
+          )
+      } else {
+        x <-
+          readxl::read_excel(input$lecat_lexicon_file$datapath)
+      }
+      shiny::showNotification('Loading lexicon: reading file', type = 'message')
       # Make sure there's at least one query
       at_least_one_query <-
         sum(grepl(
@@ -161,7 +173,10 @@ function(input, output, session) {
         },
         error = function(e) {
           # return an error if parsing fails
-          shiny::showNotification('Lexicon not loaded: Parsing error, check all categories in the lexicon have at least one query term', type = 'error')
+          shiny::showNotification(
+            'Lexicon not loaded: Parsing error, check all categories in the lexicon have at least one query term',
+            type = 'error'
+          )
         })
       } else {
         if (!at_least_one_query) {
@@ -189,16 +204,27 @@ function(input, output, session) {
     req(input$lecat_corpus_file)
 
     tryCatch({
-      data$lecat_corpus <-
-        readxl::read_excel(input$lecat_corpus_file$datapath)
+      if (input$lecat_corpus_file$type == "text/csv") {
+        data$lecat_corpus <-
+          read.csv(
+            input$lecat_corpus_file$datapath,
+            stringsAsFactors = FALSE,
+            header = TRUE,
+            sep = ",",
+            quote = "\"",
+            fileEncoding = "UTF-8",
+            skipNul = TRUE
+          )
+      } else {
+        data$lecat_corpus <-
+          readxl::read_excel(input$lecat_corpus_file$datapath)
+      }
       data$corpus_loaded <- TRUE
 
     },
     error = function(e) {
-      # return a safeError if a parsing error occurs
-      #stop(safeError(e))
+      # return an error if a parsing error occurs
       shiny::showNotification('Corpus not loaded: error', type = 'error')
-      #safeError(e)
     })
   })
 
@@ -207,8 +233,21 @@ function(input, output, session) {
     req(input$lecat_lookup_table_file)
 
     tryCatch({
-      lookup_table <-
-        readxl::read_excel(input$lecat_lookup_table_file$datapath)
+      if (input$lecat_lookup_table_file$type == "text/csv") {
+        lookup_table <-
+          read.csv(
+            input$lecat_lookup_table_file$datapath,
+            stringsAsFactors = FALSE,
+            header = TRUE,
+            sep = ",",
+            quote = "\"",
+            fileEncoding = "UTF-8",
+            skipNul = TRUE
+          )
+      } else {
+        lookup_table <-
+          readxl::read_excel(input$lecat_lookup_table_file$datapath)
+      }
 
       # check if lookup table has the Type and Column column names
       if (('Type' %in% names(lookup_table)) &
@@ -223,7 +262,7 @@ function(input, output, session) {
           # count and remove incomplete cases
           n_incomplete_cases <- sum(!complete.cases(lookup_table))
           lookup_table <-
-            lookup_table[complete.cases(lookup_table), ]
+            lookup_table[complete.cases(lookup_table),]
 
           # notify the user of incomplete cases
           shiny::showNotification(paste(
@@ -297,7 +336,7 @@ function(input, output, session) {
       error = function(e) {
         # return a safeError if a searching error occurs
         shiny::showNotification(
-          'Analysis not completed: Check your lexicon query terms. If using Advanced Regex Mode,  check all query terms are well-formed regex patterns',
+          'Analysis not completed: Check your lexicon query terms. If using Advanced Regex Mode, check all query terms are well-formed regex patterns',
           type = 'error'
         )
       })
@@ -312,7 +351,7 @@ function(input, output, session) {
 
   # Event run when generate_network_button is pressed ----
   observeEvent(input$lecat_generate_network_button, {
-    shiny::showNotification('Generating cooccurrence table and network graph')
+    shiny::showNotification('Generating co-occurrence table and network graph')
 
     # Create the network
     x <- create_cooccurrence_graph(data$lecat_raw_result,
