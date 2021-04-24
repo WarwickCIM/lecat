@@ -1,7 +1,7 @@
 # Define UI for LE-CAT app ----
 fluidPage(
   # App title ----
-  titlePanel("LE-CAT (Helena's modified version)"),
+  titlePanel("LE-CAT (development version)"),
 
   # Sidebar layout with a input and output definitions ----
   sidebarLayout(
@@ -17,7 +17,8 @@ fluidPage(
       downloadButton("download_lecat_example", "Download"),
 
       hr(),
-      tags$h5('Input files (xls, xlsx, csv format)'),
+      tags$h5('Input files'),
+      tags$p('Excel preferred (.xls, .xlsx), Comma Separated Values possible (.csv - MUST use comma , as separator and double quotes " as delimiter))'),
 
       # File input for lexicon file ----
       fileInput(
@@ -99,7 +100,7 @@ fluidPage(
         selectInput(
           "lecat_output",
           "Choose output file:",
-          choices = c("raw", 'diagnostics', "cotable", "network")
+          choices = c("raw", 'diagnostics', "cotable", "network", "category_matrix")
         ),
         downloadButton("download_lecat_output", "Download")
       )
@@ -157,14 +158,14 @@ fluidPage(
 
           br(),
           p(
-            'LE-CAT requires three files to work. All of these should be Excel (.xlsx, .xls) or Comma Separated Values (.csv) files.'
+            'LE-CAT requires three files to work. All of these should be Excel (.xlsx, .xls) or Comma Separated Values (.csv) files. Excel is safer. If using CSV, please make sure the file uses comma , as separator and double quotes " as delimiter'
           ),
           tags$ul(
             tags$li(
               'A lexicon. The file contains queries you wish to search for in the corpus and
                                        the associated category and type.'
             ),
-            tags$li('A corpus. The dataset in which to find your queries.'),
+            tags$li('A corpus. The dataset in which to find your queries. Should contain an ID column.'),
             tags$li(
               'A lookup table. A table instructing LE-CAT which column of the corpus to search
                                        for query types.'
@@ -185,10 +186,10 @@ fluidPage(
               'Search the corpus for your queries by clicking on "Run LE-CAT Analysis". The LE-CAT diagnostics will be shown in the Data tab once the analysis is complete.'
             ),
             tags$li(
-              'LE-CAT offers co-occurrence analysis. You can investigate how often categories co-occur (calculation of co-occurrence of query terms is in development). Select your desired level of co-occurrence then click "Calculate co-occurrence". A co-occurrence table and network file are now available to download.'
+              'LE-CAT offers co-occurrence analysis. You can investigate how often categories co-occur (NB. calculation of co-occurrence of query terms is in development). Select your desired level of co-occurrence then click "Calculate co-occurrence". A co-occurrence table and network file are now available to download.'
             ),
             tags$li(
-              'All the output files are available to download. Click on the drop down menu to select a file and then press Download. (NB. Cotable and Network files will NOT be available if you do not complete the step above)'
+              'All the output files are available to download (NB. cotable and network files will only be available after clicking the "Calculate co-occurrence" button). Click on the drop down menu to select a file and then press Download.'
             )
           )
         ),

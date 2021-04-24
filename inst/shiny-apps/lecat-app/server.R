@@ -57,8 +57,8 @@ function(input, output, session) {
   example_corpus <- data.frame(
     id = c(1, 2, 3),
     title = c(
-      ' James Tripp talks about LE-CAT',
-      ' Noortje Marres interview',
+      'James Tripp talks about LE-CAT',
+      'Noortje Marres interview',
       'New iphone'
     ),
     description = c(
@@ -154,7 +154,6 @@ function(input, output, session) {
         x <-
           readxl::read_excel(input$lecat_lexicon_file$datapath)
       }
-      shiny::showNotification('Loading lexicon: reading file', type = 'message')
       # Make sure there's at least one query
       at_least_one_query <-
         sum(grepl(
@@ -169,7 +168,7 @@ function(input, output, session) {
         tryCatch({
           data$lecat_lexicon <- parse_lexicon(x)
           data$lexicon_loaded <- TRUE
-          shiny::showNotification('Loading lexicon: Parsed to long format', type = 'message')
+          shiny::showNotification('Lexicon loaded: Parsed to long format', type = 'message')
         },
         error = function(e) {
           # return an error if parsing fails
@@ -303,7 +302,7 @@ function(input, output, session) {
 
     # Check if the lexicon and lookup types are the same
     if (mean(lookup_table_types %in% lexicon_types) == 1) {
-      shiny::showNotification('Running LE-CAT analysis')
+      shiny::showNotification('Running LE-CAT analysis...')
 
       tryCatch({
         # Run the analysis
@@ -326,17 +325,24 @@ function(input, output, session) {
 
         # Create diagnostic summary and assign into reactive value
         data$lecat_diagnostics <-
-          create_unique_total_diagnostics(x, inShiny = TRUE)
-
+          create_unique_total_diagnostics(data$lecat_raw_result, inShiny = TRUE)
         shiny::showNotification('Diagnostics generated')
+
+        # Notify user
+        shiny::showNotification('Generating category matrix. Please wait...')
+
+        # Create diagnostic summary and assign into reactive value
+        data$lecat_category_matrix <-
+          create_category_matrix(data$lecat_raw_result, inShiny = TRUE)
+        shiny::showNotification('Category matrix generated')
 
         # Set flag indicating analysis complete for UI
         data$lecat_analysis_complete <- TRUE
       },
       error = function(e) {
-        # return a safeError if a searching error occurs
+        # return a safeError if an analysis error occurs
         shiny::showNotification(
-          'Analysis not completed: Check your lexicon query terms. If using Advanced Regex Mode, check all query terms are well-formed regex patterns',
+          'Analysis not completed: If using Advanced Regex Mode, check all query terms are well-formed regex patterns',
           type = 'error'
         )
       })
@@ -351,7 +357,7 @@ function(input, output, session) {
 
   # Event run when generate_network_button is pressed ----
   observeEvent(input$lecat_generate_network_button, {
-    shiny::showNotification('Generating co-occurrence table and network graph')
+    shiny::showNotification('Generating co-occurrence table and network graph. Please wait...')
 
     # Create the network
     x <- create_cooccurrence_graph(data$lecat_raw_result,
@@ -394,9 +400,10 @@ function(input, output, session) {
     switch(
       input$lecat_output,
       "raw" = data$lecat_raw_result,
-      "cotable" = data$lecat_cotable,
       "diagnostics" = data$lecat_diagnostics,
-      "network" = data$lecat_network
+      "category_matrix" = data$lecat_category_matrix,
+      "network" = data$lecat_network,
+      "cotable" = data$lecat_cotable
     )
   })
 

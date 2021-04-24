@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_search.R
 \name{run_search}
 \alias{run_search}
-\title{Searches a series of strings for a specific query. Used internally by run_lecat_analysis}
+\title{Searches a series of strings for a specific query. Used internally by \link[lecat]{run_lecat_analysis}}
 \usage{
 run_search(
   strings,
@@ -10,24 +10,21 @@ run_search(
   regex = "(?<=\\\\W|^)query(?=\\\\W|$)",
   type,
   category,
-  ids,
   column,
   case_sensitive,
   advanced_mode
 )
 }
 \arguments{
-\item{strings}{Vector of strings to search through. Strings are from the chosen corpus.}
+\item{strings}{Vector of strings to search through. The values for the corresponding search column from the chosen corpus for a given lexicon type, as specified in the lookup table.}
 
-\item{query}{String query term to search for in the strings. Taken from the chosen lexicon.}
+\item{query}{String query term to search for in the strings. Derived from lexicon.}
 
 \item{regex}{String regular expression defining the search pattern. Defaults to searching for the query term with non word characters either side or at the beginning or end of string. Look behind and look ahead impede characters outside the query term to be matched (correctly finds emoji or any other non-word query terms)}
 
 \item{type}{String query type. Derived from lexicon type.}
 
-\item{category}{String query type. Derived from lexicon type.}
-
-\item{ids}{id of the string}
+\item{category}{String query type. Derived from lexicon category.}
 
 \item{column}{String column name examined included in the returned dataframe}
 
@@ -36,7 +33,7 @@ run_search(
 \item{advanced_mode}{If advanced_mode is TRUE then the search will not apply a regex, instead it will assume all query terms are well-formed regex patterns (this covers query terms with no regex pattern at all).}
 }
 \value{
-dataframe with counts of the query in each string
+dataframe with counts of the query in each string.
 }
 \description{
 Search through a series for queries based on a regex query.
