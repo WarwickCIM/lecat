@@ -11,8 +11,9 @@
 create_category_matrix <-
   function(lecat_result, inShiny = FALSE) {
     # iterators
+    categories <- unique(lecat_result$Category)
     i <- 1
-    n <- nrow(lecat_result$Category)
+    n <- nrow(categories)
 
     # start building the result matrix by adding row numbers (which are column names in the lecat_result data frame, from the fifth column) as the first column
     result <-
@@ -20,13 +21,17 @@ create_category_matrix <-
 
     if (inShiny) {
       shiny::withProgress(message = 'Generating category matrix', detail = 'This is fairly fast', value = 0, {
-        for (x in lecat_result$Category) {
 
+        # go through each category
+        for (x in categories) {
+
+          # increment progress bar
           shiny::incProgress(1/n, detail = paste('Category:', x))
           i <- i + 1
 
           # subset the rows that match the category
           mm <- subset(lecat_result, Category == x)
+
           # start adding columns to the result dataframe (subtotals for ID columns - if a tweet has hit any of the query terms for the category the sum will be more than 0)
           result <- cbind(result, colSums(mm[, c(5:ncol(mm))]))
         }
@@ -34,11 +39,12 @@ create_category_matrix <-
     } else {
       pb <- utils::txtProgressBar(
         min = 1,
-        max = nrow(lecat_result$Category),
+        max = nrow(categories),
         initial = 1
       )
-      for (x in lecat_result$Category) {
-        # increment the progress bar
+      # go through each category
+      for (x in categories) {
+        # increment progress bar
         utils::setTxtProgressBar(pb, i)
         i <- i + 1
         # subset the rows that match the category
@@ -49,7 +55,7 @@ create_category_matrix <-
 
     }
     # now let's add the column names so humans can read them
-    colnames(result) <- c("Row ID", lecat_result$Category)
+    colnames(result) <- c("Row ID", categories)
 
     # now return the result as a dataframe
     as.data.frame(result, stringsAsFactors = FALSE)
