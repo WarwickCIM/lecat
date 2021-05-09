@@ -46,12 +46,12 @@ run_lecat_analysis <-
                           {
                             # go through each row in the long lexicon
                             for (i in 1:nrow(lexicon)) {
-                              shiny::incProgress(1 / n, detail = paste("query", i))
+                              shiny::incProgress(1 / n, detail = paste("Query", i, lexicon$Queries[i]))
                               # set the search column for this type, as specified in the lookup table
                               this_search_column <-
                                 searches$Column[lexicon$Type[i] == searches$Type]
                               #out <- rbind(out,
-                              shiny::showNotification(paste('Query:', lexicon$Queries[i]))
+                              #shiny::showNotification(paste('Query:', lexicon$Queries[i]))
                               # search for this query term
                               result[i, ] <- run_search(
                                 corpus[, this_search_column],
